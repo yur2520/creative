@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>감정 카드 맞추기 게임</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        /* 게임 보드의 원근감 설정 */
+        .game-board {
+            perspective: 1000px;
+        }
+        /* 개별 카드의 스타일 및 플립 애니메이션 */
+        .card {
+            width: 100%;
+            aspect-ratio: 3 / 4; /* 카드의 가로:세로 비율을 3:4로 고정하여 높이를 일정하게 만듭니다. */
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+            cursor: pointer;
+        }
+        .card.is-flipped {
+            transform: rotateY(180deg);
+        }
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden; /* 카드의 뒷면을 숨김 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 1rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        /* 카드 앞면 (숨겨진 상태) */
+        .card-front {
+            background-color: #60a5fa; /* blue-400 */
+            color: white;
+            font-size: 2.5rem;
+        }
+        /* 카드 뒷면 (설명) */
+        .card-back {
+            background-color: #f0f9ff; /* sky-50 */
+            color: #0c4a6e; /* sky-900 */
+            transform: rotateY(180deg);
+            /* 카드 크기에 따라 폰트 크기가 조절되도록 clamp() 함수 사용 */
+            font-size: clamp(0.7rem, 2.2vw, 0.9rem);
+            line-height: 1.5; /* 줄 간격 조정 */
+        }
+        /* 카드 뒷면 (제목) */
+        .card-back.is-title {
+            font-size: clamp(1.5rem, 6vw, 2.2rem);
+            font-weight: 700;
+        }
+        /* 매치된 카드의 스타일 */
+        .card.is-matched {
+            opacity: 0.5;
+            pointer-events: none; /* 클릭 비활성화 */
+        }
+    </style>
+</head>
+<body class="bg-sky-100 flex flex-col items-center justify-center min-h-screen p-4">
+
+    <div class="w-full max-w-4xl mx-auto">
+        <!-- 게임 제목 및 설명 -->
+        <header class="text-center mb-6">
+            <h1 class="text-4xl md:text-5xl font-bold text-sky-800 mb-2">감정 카드 맞추기</h1>
+            <p class="text-sky-700">감정 이름과 설명을 짝맞춰 보세요!</p>
+        </header>
+
+        <!-- 게임 정보 및 컨트롤 -->
+        <div class="flex justify-between items-center mb-4 px-2">
+            <div class="text-lg font-medium text-sky-800">
+                시도 횟수: <span id="moves-counter">0</span>
+            </div>
+            <button id="reset-button" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-transform transform hover:scale-105">
+                다시 시작
+            </button>
+        </div>
+
+        <!-- 게임 보드 -->
+        <div id="game-board" class="grid grid-cols-4 gap-4">
+            <!-- 카드는 JavaScript로 생성됩니다 -->
+        </div>
+    </div>
+
+    <!-- 게임 완료 모달 -->
+    <div id="win-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-white p-8 rounded-xl shadow-2xl text-center transform transition-all scale-95">
+            <h2 class="text-3xl font-bold text-yellow-500 mb-4">축하합니다!</h2>
+            <p class="text-gray-700 mb-2">모든 감정 카드를 맞추셨어요!</p>
+            <p class="text-gray-600 mb-6">총 <span id="final-moves"></span>번 만에 성공했습니다.</p>
+            <button id="play-again-button" class="bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-2 px-6 rounded-lg shadow-md">
+                다시하기
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // 전체 감정 목록
+        const allEmotions = [
+            { title: "감사", description: "도움이나 좋은 일에 대해 기쁨과 풍성함을 느끼는 마음입니다." },
+            { title: "희망", description: "어려움 속에서도 더 나은 미래를 기대하고 믿는 긍정적인 감정입니다." },
+            { title: "만족", description: "자신의 기대나 목표가 이루어져 마음에 드는 결과를 얻었을 때의 감정입니다." },
+            { title: "소망", description: "무언가를 간절히 원하고, 그것이 현실이 되길 기다리는 마음입니다." },
+            { title: "포근", description: "부드러운 담요에 감싸인 것처럼 안전하고 따뜻하게 느끼는 감정입니다." },
+            { title: "너그러움", description: "다른 사람의 잘못을 비난하기보다 이해하고 받아들이려는 마음입니다." },
+            { title: "안심", description: "위험이나 걱정이 사라져 마음이 평온해진 상태입니다." },
+            { title: "차분", description: "마음이 가라앉아 조용하고 평온한 상태입니다." },
+            { title: "고독", description: "세상에 홀로 떨어진 듯 외롭고 쓸쓸하지만, 깊은 생각에 잠기는 시간이기도 합니다." },
+            { title: "측은", description: "어려움을 겪는 다른 사람을 보고 마음 아파하고 걱정하는 감정입니다." },
+            { title: "행복", description: "좋아하는 일을 하거나 바라던 일이 이뤄졌을 때 마음이 기쁘고 편안한 감정입니다." },
+            { title: "기쁨", description: "좋은 일이 생겨 마음이 흐뭇하고 행복하게 느껴지는 감정입니다." },
+            { title: "사랑", description: "대상을 마음 깊이 아끼고 존경하며, 좋은 일을 해주고 싶은 강력한 감정입니다." },
+            { title: "신남", description: "좋은 일로 매우 흥분되고 기쁜 상태입니다." },
+            { title: "즐거움", description: "예상보다 좋은 일이 생기거나 하고 싶던 일을 할 때 느끼는 기쁜 감정입니다." },
+            { title: "열정", description: "어떤 일에 온 마음과 에너지를 쏟으며 강렬하게 몰두하는 마음입니다." },
+            { title: "감탄", description: "매우 멋지거나 놀라운 것을 보고 마음속 깊이 감동하는 감정입니다." },
+            { title: "자랑", description: "스스로 이룬 일에 만족하고 주변에 알리고 싶은 마음입니다." },
+            { title: "놀람", description: "전혀 예상하지 못한 일을 겪었을 때 느끼는 감정입니다." },
+            { title: "질투", description: "다른 사람이 가진 것을 나도 갖고 싶다고 강하게 느끼는 감정입니다." },
+            { title: "그리움", description: "누군가나 어떤 때를 다시 보고 싶고 기다리는 애타는 마음입니다." },
+            { title: "부끄러움", description: "자신의 잘못이나 실수를 다른 사람 앞에서 깨달았을 때의 감정입니다." },
+            { title: "긴장", description: "중요한 일을 앞두고 마음을 조이며 정신을 바짝 차리는 상태입니다." },
+            { title: "후회", description: "이미 한 행동이나 선택에 대해 아쉬워하고 반성하는 감정입니다." },
+            { title: "슬픔", description: "소중한 것을 잃었을 때 느끼는 깊은 마음의 아픔입니다." },
+            { title: "실망", description: "기대했던 결과가 이루어지지 않아 마음이 허전하고 상하는 감정입니다." },
+            { title: "두려움", description: "위험하거나 낯선 상황을 마주할 때 안전하지 않다고 느끼는 감정입니다." },
+            { title: "외로움", description: "주변에 아무도 없어 혼자인 것 같고 쓸쓸하게 느끼는 감정입니다." },
+            { title: "좌절", description: "목표를 이루지 못해 자신감을 잃고 화가 나거나 슬퍼지는 감정입니다." },
+            { title: "불안", description: "앞으로 나쁜 일이 생길 것 같아 걱정되고 마음이 편치 않은 감정입니다." },
+            { title: "화", description: "원치 않는 일이 발생했을 때 느끼는 강한 불편함과 분노의 감정입니다." }
+        ];
+
+        const gameBoard = document.getElementById('game-board');
+        const movesCounter = document.getElementById('moves-counter');
+        const resetButton = document.getElementById('reset-button');
+        const winModal = document.getElementById('win-modal');
+        const finalMoves = document.getElementById('final-moves');
+        const playAgainButton = document.getElementById('play-again-button');
+
+        let firstCard = null;
+        let secondCard = null;
+        let lockBoard = false;
+        let moves = 0;
+        let matchedPairs = 0;
+        let totalPairs = 0;
+
+        // 게임 시작 함수
+        function startGame() {
+            // 초기화
+            moves = 0;
+            matchedPairs = 0;
+            lockBoard = false;
+            firstCard = null;
+            secondCard = null;
+            gameBoard.innerHTML = '';
+            movesCounter.textContent = '0';
+            winModal.classList.add('hidden');
+
+            // 전체 감정 목록을 섞고, 게임에 사용할 8쌍의 카드를 선택합니다.
+            const shuffledEmotions = [...allEmotions].sort(() => 0.5 - Math.random());
+            const selectedEmotions = shuffledEmotions.slice(0, 8);
+            totalPairs = selectedEmotions.length;
+
+            // 선택된 감정들로 카드 배열 생성 (제목 카드 + 설명 카드)
+            const gameCards = [];
+            selectedEmotions.forEach((emotion, index) => {
+                gameCards.push({ type: 'title', content: emotion.title, matchId: index });
+                gameCards.push({ type: 'description', content: emotion.description, matchId: index });
+            });
+
+            // 카드 섞기
+            gameCards.sort(() => 0.5 - Math.random());
+            
+            // HTML 카드 생성 및 보드에 추가
+            gameCards.forEach(cardData => {
+                const cardElement = document.createElement('div');
+                cardElement.classList.add('card');
+                cardElement.dataset.matchId = cardData.matchId;
+
+                cardElement.innerHTML = `
+                    <div class="card-face card-front">?</div>
+                    <div class="card-face card-back ${cardData.type === 'title' ? 'is-title' : ''}">${cardData.content}</div>
+                `;
+                
+                cardElement.addEventListener('click', handleCardClick);
+                gameBoard.appendChild(cardElement);
+            });
+        }
+
+        // 카드 클릭 처리 함수
+        function handleCardClick() {
+            if (lockBoard) return;
+            if (this === firstCard) return;
+
+            this.classList.add('is-flipped');
+
+            if (!firstCard) {
+                firstCard = this;
+                return;
+            }
+
+            secondCard = this;
+            lockBoard = true;
+            incrementMoves();
+            checkForMatch();
+        }
+
+        // 매치 확인 함수
+        function checkForMatch() {
+            const isMatch = firstCard.dataset.matchId === secondCard.dataset.matchId;
+            isMatch ? disableCards() : unflipCards();
+        }
+
+        // 카드가 매치되었을 때
+        function disableCards() {
+            firstCard.removeEventListener('click', handleCardClick);
+            secondCard.removeEventListener('click', handleCardClick);
+            firstCard.classList.add('is-matched');
+            secondCard.classList.add('is-matched');
+            
+            matchedPairs++;
+            resetBoard();
+
+            if (matchedPairs === totalPairs) {
+                setTimeout(showWinModal, 500);
+            }
+        }
+        
+        // 카드가 매치되지 않았을 때
+        function unflipCards() {
+            setTimeout(() => {
+                firstCard.classList.remove('is-flipped');
+                secondCard.classList.remove('is-flipped');
+                resetBoard();
+            }, 1200);
+        }
+
+        // 보드 상태 리셋 함수
+        function resetBoard() {
+            [firstCard, secondCard, lockBoard] = [null, null, false];
+        }
+
+        // 시도 횟수 증가 함수
+        function incrementMoves() {
+            moves++;
+            movesCounter.textContent = moves;
+        }
+
+        // 게임 완료 모달 표시
+        function showWinModal() {
+            finalMoves.textContent = moves;
+            winModal.classList.remove('hidden');
+            // 모달 등장 애니메이션
+            setTimeout(() => {
+                winModal.querySelector('div').classList.add('scale-100');
+            }, 10);
+        }
+
+        // 이벤트 리스너 연결
+        resetButton.addEventListener('click', startGame);
+        playAgainButton.addEventListener('click', startGame);
+
+        // 페이지 로드 시 게임 시작
+        startGame();
+    </script>
+</body>
+</html>
