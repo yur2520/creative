@@ -97,9 +97,10 @@
                 // 카드 스타일링 클래스 추가
                 card.className = `emotion-card ${emotion.color} rounded-xl shadow-lg p-6 flex flex-col`;
                 
-                // 카드 내부 HTML 구조
+                // 카드 내부 HTML 구조 (구분선 추가)
                 card.innerHTML = `
-                    <h2 class="text-2xl font-bold text-gray-800 mb-3">${emotion.title}</h2>
+                    <h2 class="text-2xl font-bold text-gray-800">${emotion.title}</h2>
+                    <hr class="border-t-2 border-white my-3">
                     <p class="text-gray-700 leading-relaxed text-base">${emotion.description}</p>
                 `;
                 
