@@ -1,75 +1,133 @@
-<!DOCTYPE html> ##https://yur2520.github.io/safety-manuals/index.html
+<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>안전교육 매뉴얼 모음</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+    <title>수업자료 모음</title>
     <style>
+        /* SUITE Variable 폰트 (로컬 파일) */
+        @font-face {
+            font-family: 'SUITE Variable';
+            font-weight: 300 900;
+            /* 폰트 파일 경로가 올바른지 확인해주세요. */
+            src: url('./SUITE-Variable.woff2') format('woff2-variations');
+        }
+
+        /* --- 기본 스타일 --- */
         body {
-            font-family: 'Noto Sans KR', sans-serif;
+            /* SUITE Variable 폰트를 기본으로 사용하고, 없을 경우 Malgun Gothic을 사용합니다. */
+            font-family: 'SUITE Variable', 'Malgun Gothic', sans-serif;
+            margin: 0;
+            background-color: #f4f4f4;
+            color: #333;
         }
-        .hero-banner {
-            background: linear-gradient(to right, #e0c3fc 0%, #8ec5fc 100%);
+
+        /* --- 카드 레이아웃 컨테이너 --- */
+        .card-container {
+            display: flex; /* Flexbox 레이아웃 사용 */
+            justify-content: center; /* 가로 중앙 정렬 */
+            align-items: flex-start; /* 세로 상단 정렬 */
+            flex-wrap: wrap; /* 카드가 화면 너비를 넘어가면 다음 줄로 이동 */
+            gap: 40px; /* 카드 사이의 간격 */
+            padding: 50px 20px; /* 컨테이너 내부 여백 */
+            min-height: 100vh; /* 최소 높이를 화면 전체로 설정 */
+            box-sizing: border-box; /* padding을 포함하여 높이 계산 */
         }
+
+        /* --- 개별 카드 스타일 --- */
+        .card {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 320px; /* 카드의 기본 너비 */
+            box-sizing: border-box;
+        }
+
+        /* --- 텍스트 및 버튼 스타일 (기존 스타일 유지) --- */
+        .card h1 {
+            color: #7ebad9;
+            margin-top: 0; /* h1 상단 마진 제거 */
+            margin-bottom: 20px;
+            font-size: 2.2em;
+            font-weight: 700;
+        }
+        
+        .card p {
+            margin-bottom: 30px;
+            font-size: 1em;
+            line-height: 1.6;
+        }
+
+        .button-group a {
+            display: block; /* 버튼을 블록 요소로 변경하여 한 줄에 하나씩 표시 */
+            background-color: #7ebad9;
+            color: white;
+            padding: 15px 25px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 500;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            margin-bottom: 15px; /* 버튼 사이의 간격 */
+        }
+
+        .button-group a:last-child {
+            margin-bottom: 0; /* 마지막 버튼의 하단 간격 제거 */
+        }
+
+        .button-group a:hover {
+            background-color: #24759e;
+            transform: translateY(-2px); /* 호버 시 살짝 위로 이동하는 효과 */
+        }
+        
+        /* 비활성화된 버튼 스타일 */
+        .button-group a.disabled {
+            background-color: #cdd2d5;
+            cursor: not-allowed;
+            pointer-events: none; /* 클릭 이벤트 비활성화 */
+        }
+        
+        .button-group a.disabled:hover {
+            transform: none;
+        }
+
     </style>
 </head>
-<body class="bg-gray-100">
+<body>
+    <div class="card-container">
 
-    <div class="container mx-auto p-4 md:p-8">
-        
-        <!-- 헤더 섹션 -->
-        <header class="hero-banner text-center p-8 rounded-2xl shadow-lg mb-12">
-            <h1 class="text-4xl md:text-5xl font-bold text-white mb-2">🛡️ 안전교육 매뉴얼 모음 🛡️</h1>
-            <p class="text-lg text-white"></p>
-        </header>
-
-        <!-- 카드 섹션 -->
-        <main class="grid md:grid-cols-3 gap-8">
-
-            <!-- 1. 생존수영 관련 자료 -->
-            <div class="bg-white p-8 rounded-2xl shadow-lg flex flex-col">
-                <div class="flex-grow">
-                    <h2 class="text-2xl font-bold text-center mb-6 text-blue-600">🏊‍♂️ 생존수영 관련 자료</h2>
-                    <p class="text-center text-gray-600 mb-6">25</p>
-                </div>
-                <div class="text-center">
-                    <a href="#" class="inline-block bg-blue-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-600 transition-colors">자료1</a>
-                </div>
+        <div class="card">
+            <h1>미술 수업자료</h1>
+            <p>다양한 발상 표현과 색의 원리를 배워보세요.</p>
+            <div class="button-group">
+                <a href="balsang.html">발상 표현 안내</a>
+                <a href="colors.html">색의 속성과 대비 효과</a>
             </div>
+        </div>
 
-            <!-- 2. 재난안전 자료 -->
-            <div class="bg-white p-8 rounded-2xl shadow-lg flex flex-col">
-                <div class="flex-grow">
-                    <h2 class="text-2xl font-bold text-center mb-6 text-orange-600">🌪️ 재난안전 자료</h2>
-                    <p class="text-center text-gray-600 mb-6">25</p>
-                </div>
-                <div class="text-center">
-                    <a href="hot_summer_manual.html" class="inline-block bg-orange-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-orange-600 transition-colors">폭염</a>
-                </div>
+        <div class="card">
+            <h1>국어 수업자료</h1>
+            <p>글을 효과적으로 읽고 이해하는 방법을 탐구합니다.</p>
+            <div class="button-group">
+                <a href="readingmethods.html">여러 가지 읽기 방법</a>
+                <!-- 비활성화된 버튼 예시 -->
+                <a href="#" class="disabled">자료 준비 중</a>
             </div>
+        </div>
 
-            <!-- 3. 체험학습 안전 자료 -->
-            <div class="bg-white p-8 rounded-2xl shadow-lg flex flex-col">
-                <div class="flex-grow">
-                    <h2 class="text-2xl font-bold text-center mb-6 text-green-600">🚌 체험학습 안전 자료</h2>
-                    <p class="text-center text-gray-600 mb-6">25</p>
-                </div>
-                <div class="text-center space-x-2">
-                    <a href="#" class="inline-block bg-green-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-600 transition-colors">버스</a>
-                    <a href="#" class="inline-block bg-green-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-600 transition-colors">도보 이동</a>
-                    <a href="#" class="inline-block bg-green-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-600 transition-colors">수영장</a>
-                </div>
+        <div class="card">
+            <h1>음악 수업자료</h1>
+            <p>우리나라의 소중한 음악 문화유산을 감상해 보세요.</p>
+            <div class="button-group">
+                <a href="music/traditional-music-legacy.html">우리나라의 음악 문화유산</a>
+                 <!-- 비활성화된 버튼 예시 -->
+                <a href="#" class="disabled">자료 준비 중</a>
             </div>
-
-        </main>
-
-        <footer class="text-center mt-12 py-6 border-t-2 border-gray-200">
-            <p class="text-gray-500">안전은 아무리 강조해도 지나치지 않아요. 항상 조심하는 습관을 가집시다!</p>
-        </footer>
+        </div>
 
     </div>
-
 </body>
 </html>
