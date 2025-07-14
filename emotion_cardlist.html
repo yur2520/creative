@@ -8,10 +8,17 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <style>
-        /* Noto Sans KR 폰트를 기본으로 사용합니다 */
+    <style> 
+        /* SUITE Variable 폰트 (로컬 파일) */
+        @font-face {
+            font-family: 'SUITE Variable';
+            font-weight: 300 900;
+            /* 폰트 파일 경로 확인하기*/
+            src: url('./SUITE-Variable.woff2') format('woff2-variations');
+        }
+        
         body {
-            font-family: 'Noto Sans KR', sans-serif;
+            font-family: 'SUITE Variable','Noto Sans KR', sans-serif;
         }
         /* 카드 호버 시 부드러운 전환 효과를 추가합니다 */
         .emotion-card {
