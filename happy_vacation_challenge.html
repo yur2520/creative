@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>행복한 방학 30일 챌린지</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        /* 커스텀 스타일 추가 */
+        .challenge-card {
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out;
+        }
+        .challenge-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .modal-backdrop {
+            transition: opacity 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-yellow-50 text-gray-800">
+
+    <div class="container mx-auto px-4 py-8 md:py-12">
+        <!-- 헤더 -->
+        <header class="text-center mb-8 md:mb-12">
+            <!-- 바로가기 버튼 및 설명 추가 -->
+            <div class="flex justify-center items-center flex-wrap gap-x-4 gap-y-2 mb-6">
+                <a href="#" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-5 rounded-lg transition-colors duration-200 text-sm sm:text-base">심스페이스 마음일기 바로가기</a>
+                <p class="text-xs sm:text-sm text-gray-600 italic">*색칠된 칸은 심스페이스 마음일기에 생각이나 느낌을 적어주세요!</p>
+            </div>
+
+            <h1 class="text-4xl md:text-5xl font-bold text-yellow-600 mb-2">행복한 방학 30일 챌린지</h1>
+            <p class="text-lg text-gray-600">순서대로 도전하지 않아도 되고, 하루에 여러 가지를 실천해도 좋습니다.</p>
+            <p class="text-lg text-gray-600">처음과 마지막 칸은 내가 스스로 정해 봅시다.</p>
+            <p class="mt-4 text-xl font-bold text-yellow-500">행복한 일은 매일 있어요! 여러분의 행복한 방학을 응원해요.</p>
+        </header>
+
+        <!-- 챌린지 그리드 -->
+        <main id="challenge-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6">
+            <!-- JavaScript로 챌린지 카드 생성 -->
+        </main>
+    </div>
+
+    <!-- 모달 -->
+    <div id="challenge-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden modal-backdrop">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md mx-auto p-6 md:p-8 text-center transform transition-all duration-300 scale-95 opacity-0" id="modal-content">
+            <h2 id="modal-title" class="text-2xl font-bold text-yellow-600 mb-2"></h2>
+            <p id="modal-description" class="text-gray-700 mb-6"></p>
+            <button id="close-modal-btn" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-6 rounded-full transition-colors duration-200">닫기</button>
+        </div>
+    </div>
+
+    <script>
+        const challenges = [
+            { title: "(자유 미션)", description: "스스로 하고 싶은 멋진 미션을 정해 실천해 보세요! 어떤 것이든 좋아요." },
+            { title: "우리 동네 산책하기", description: "평소에 가보지 않았던 길로 걸어보세요. 새로운 풍경을 발견할 수 있을 거예요." },
+            { title: "친한 친구에게 전화로 안부 묻기", description: "목소리를 들으면 더 반가울 거예요. 친구의 방학 계획도 물어보세요." },
+            { title: "멋진 표정으로 셀카 찍기", description: "세상에서 가장 멋진 표정을 지어보세요! 활짝 웃는 얼굴, 자신감 넘치는 얼굴 모두 좋아요." },
+            { title: "거울 보고 스스로 칭찬하기", description: "'오늘도 멋진데?', '넌 잘할 수 있어!' 스스로에게 힘이 되는 말을 해 주세요." }, // 색칠할 카드
+            { title: "오늘 입은 옷차림 사진 찍기", description: "나만의 패션 센스를 기록해 보세요. 방학이 끝날 때쯤 멋진 패션 앨범이 생길지도 몰라요." },
+            { title: "환경 보호 한 가지 실천하기", description: "안 쓰는 전기 코드 뽑기, 분리수거 잘하기 등 작은 실천이 지구를 건강하게 만들어요." },
+            { title: "짧은 이야기 만들어 보기", description: "주인공은 누구? 어떤 일이 일어날까? 상상력을 발휘해 나만의 이야기를 만들어 보세요." }, // 색칠할 카드
+            { title: "취침 시간 미리 정해 두고 지키기", description: "규칙적인 수면은 건강한 하루를 위한 최고의 보약이에요." },
+            { title: "오늘 할 일 적고 실천하기", description: "작은 계획이라도 괜찮아요. 하나씩 해내면서 성취감을 느껴보세요." }, // 색칠할 카드
+            { title: "쓰지 않는 물건 정리하기", description: "내 공간이 깨끗해지면 마음도 상쾌해져요. 필요한 친구에게 나눠주는 것도 좋은 방법이에요." },
+            { title: "거울 보고 춤추기", description: "신나는 음악에 맞춰 몸을 흔들어 보세요! 스트레스가 싹 날아갈 거예요." },
+            { title: "구름 사진 찍어서 이름 붙여보기", description: "동물 모양? 아이스크림 모양? 하늘을 보며 상상의 나래를 펼쳐보세요." },
+            { title: "가족들에게 사랑한다고 말하기", description: "쑥스러워도 용기를 내어 표현해 보세요. 가족 모두가 행복해질 거예요." },
+            { title: "샤워하며 노래 부르기", description: "나만의 작은 콘서트를 열어보세요! 누구도 신경 쓸 필요 없어요." },
+            { title: "좋아하는 그림 그리기", description: "만화 캐릭터, 아름다운 풍경, 상상 속 동물 등 무엇이든 좋아요." },
+            { title: "쭈욱 쭈욱 스트레칭하기", description: "몸을 길게 늘여주면 뭉친 근육이 풀리고 키 크는 데도 도움이 돼요." },
+            { title: "가족에게 편지 쓰기", description: "평소에 하지 못했던 고마운 마음을 글로 전해보세요." },
+            { title: "가장 행복한 기억 떠올리기", description: "행복했던 순간을 생각하면 지금 기분도 좋아질 거예요." }, // 색칠할 카드
+            { title: "오늘의 기분 적어보기", description: "기쁨, 슬픔, 화남 등 어떤 기분이든 괜찮아요. 내 마음을 들여다보는 시간이에요." }, // 색칠할 카드
+            { title: "친구와 놀 약속 잡고 신나게 놀기", description: "함께하면 즐거움이 두 배! 맛있는 것도 먹고 재미있는 게임도 해보세요." },
+            { title: "우리 가족 안마해주기", description: "고마운 마음을 담아 어깨, 팔, 다리를 주물러 주세요. 사랑이 전달될 거예요." },
+            { title: "각종 안전 수칙 확인하고 실천하기", description: "물놀이 안전, 교통안전 등 방학을 안전하게 보내기 위한 약속을 꼭 지켜요." },
+            { title: "리코더 혹은 단소 연주하기", description: "아는 곡을 연주해도 좋고, 새로운 곡에 도전해도 좋아요. 아름다운 소리를 만들어보세요." },
+            { title: "하루 동안 몸에 안 좋은 음식 먹지 않기", description: "내 몸을 위해 건강한 음식으로 하루를 채워보세요. 몸이 가벼워지는 것을 느낄 수 있을 거예요." },
+            { title: "좋아하는 음악 듣기", description: "음악은 우리의 마음을 위로하고 즐겁게 해줘요." },
+            { title: "내 공간 스스로 청소하기", description: "책상 위, 침대 주변을 정리정돈 해보세요. 깨끗한 환경에서 좋은 생각이 쑥쑥!" },
+            { title: "내 이름이나 좋아하는 것으로 삼행시 짓기", description: "재미있는 아이디어를 담아 나만의 시를 만들어 보세요." }, // 색칠할 카드
+            { title: "좋아하는 음식 먹기", description: "맛있는 음식을 먹는 것은 큰 행복 중 하나죠!" },
+            { title: "(자유 미션)", description: "방학을 마무리하며 가장 기억에 남는 챌린지를 한 번 더 하거나, 새로운 미션을 만들어 도전해 보세요!" }
+        ];
+
+        const grid = document.getElementById('challenge-grid');
+        const modal = document.getElementById('challenge-modal');
+        const modalContent = document.getElementById('modal-content');
+        const modalTitle = document.getElementById('modal-title');
+        const modalDescription = document.getElementById('modal-description');
+        const closeModalBtn = document.getElementById('close-modal-btn');
+        
+        // 색칠할 카드 번호 (index 기준이므로 1을 빼줌)
+        const specialChallengeIndices = [5-1, 8-1, 10-1, 19-1, 20-1, 28-1];
+
+        // 챌린지 카드 생성 및 그리드에 추가
+        challenges.forEach((challenge, index) => {
+            const card = document.createElement('div');
+            
+            // 기본 카드 클래스
+            let cardClasses = 'challenge-card p-4 rounded-xl shadow-md cursor-pointer flex flex-col items-center justify-center text-center h-32 md:h-36 ';
+
+            // 특별 챌린지인 경우 배경색 클래스 추가
+            if (specialChallengeIndices.includes(index)) {
+                cardClasses += 'bg-yellow-200 hover:bg-yellow-300';
+            } else {
+                cardClasses += 'bg-white hover:bg-gray-50';
+            }
+            
+            card.className = cardClasses;
+            
+            const number = document.createElement('div');
+            number.className = 'text-2xl font-bold text-yellow-500 mb-2';
+            number.textContent = index + 1;
+            
+            const title = document.createElement('p');
+            title.className = 'font-semibold text-gray-700';
+            title.textContent = challenge.title;
+
+            card.appendChild(number);
+            card.appendChild(title);
+
+            card.addEventListener('click', () => openModal(challenge, index + 1));
+            grid.appendChild(card);
+        });
+
+        // 모달 열기 함수
+        function openModal(challenge, number) {
+            modalTitle.textContent = `${number}. ${challenge.title}`;
+            modalDescription.textContent = challenge.description;
+            modal.classList.remove('hidden');
+            // 부드러운 애니메이션 효과
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modalContent.classList.remove('scale-95', 'opacity-0');
+            }, 10);
+        }
+
+        // 모달 닫기 함수
+        function closeModal() {
+            modalContent.classList.add('scale-95', 'opacity-0');
+            modal.classList.add('opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300); // transition duration과 일치
+        }
+
+        // 이벤트 리스너
+        closeModalBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+        
+        // ESC 키로 모달 닫기
+        window.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && !modal.classList.contains('hidden')) {
+                closeModal();
+            }
+        });
+
+    </script>
+</body>
+</html>
