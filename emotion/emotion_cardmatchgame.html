@@ -9,18 +9,15 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-         /* SUITE Variable 폰트 (로컬 파일) */
+        /* SUITE Variable 폰트 (로컬 파일) */
         @font-face {
             font-family: 'SUITE Variable';
             font-weight: 300 900;
             /* 폰트 파일 경로가 올바른지 확인해주세요. */
-            src: url('../SUITE-Variable.woff2') format('woff2-variations');
+            src: url('./SUITE-Variable.woff2') format('woff2-variations');
         }
         body {
             font-family: 'SUITE Variable','Noto Sans KR', sans-serif;
-        }
-        body {
-            font-family:  'SUITE Variable','Noto Sans KR', sans-serif;
         }
         /* 게임 보드의 원근감 설정 */
         .game-board {
@@ -81,13 +78,11 @@
 <body class="bg-sky-100 flex flex-col items-center justify-center min-h-screen p-4">
 
     <div class="w-full max-w-4xl mx-auto">
-        <!-- 게임 제목 및 설명 -->
         <header class="text-center mb-6">
             <h1 class="text-4xl md:text-5xl font-bold text-sky-800 mb-2">감정 카드 맞추기</h1>
             <p class="text-sky-700">감정의 이름과 설명을 알맞게 맞추어 주세요.</p>
         </header>
 
-        <!-- 게임 정보 및 컨트롤 -->
         <div class="flex justify-around items-center mb-4 px-2 bg-white/50 p-3 rounded-lg">
             <div class="text-lg font-medium text-sky-800 text-center">
                 걸린 시간<br><span id="timer">00:00</span>
@@ -100,13 +95,10 @@
             </button>
         </div>
 
-        <!-- 게임 보드 -->
         <div id="game-board" class="grid grid-cols-4 gap-4">
-            <!-- 카드는 JavaScript로 생성됩니다 -->
-        </div>
+            </div>
     </div>
 
-    <!-- 게임 완료 모달 -->
     <div id="win-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
         <div class="bg-white p-8 rounded-xl shadow-2xl text-center transform transition-all scale-95">
             <h2 class="text-3xl font-bold text-yellow-500 mb-4">축하합니다!</h2>
@@ -118,6 +110,8 @@
             </button>
         </div>
     </div>
+
+    <audio id="flipSound" src="./effectsound.wav" preload="auto"></audio>
 
     <script>
         // 전체 감정 목록
@@ -148,7 +142,7 @@
             { title: "후회", description: "이미 한 행동이나 선택에 대해 아쉬워하고 반성하는 감정입니다." },
             { title: "슬픔", description: "소중한 것을 잃었을 때 느끼는 깊은 마음의 아픔입니다." },
             { title: "실망", description: "기대했던 결과가 이루어지지 않아 마음이 허전하고 상하는 감정입니다." },
-            { title: "두려움", description: "위험하거나 낯선 상황을 마주할 때 안전하지 않다고 느끼는 감정입니다." },
+            { title: "두려움", "description": "위험하거나 낯선 상황을 마주할 때 안전하지 않다고 느끼는 감정입니다." },
             { title: "외로움", description: "주변에 아무도 없어 혼자인 것 같고 쓸쓸하게 느끼는 감정입니다." },
             { title: "좌절", description: "목표를 이루지 못해 자신감을 잃고 화가 나거나 슬퍼지는 감정입니다." },
             { title: "불안", description: "앞으로 나쁜 일이 생길 것 같아 걱정되고 마음이 편치 않은 감정입니다." },
@@ -163,6 +157,9 @@
         const finalMoves = document.getElementById('final-moves');
         const finalTime = document.getElementById('final-time');
         const playAgainButton = document.getElementById('play-again-button');
+
+        // 사운드 요소 가져오기
+        const flipSound = document.getElementById('flipSound');
 
         let firstCard = null;
         let secondCard = null;
@@ -243,6 +240,9 @@
             if (this === firstCard) return;
 
             this.classList.add('is-flipped');
+            // 카드 뒤집기 사운드 재생
+            flipSound.currentTime = 0; // 사운드를 처음부터 재생
+            flipSound.play();
 
             if (!firstCard) {
                 firstCard = this;
