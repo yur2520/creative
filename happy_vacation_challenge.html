@@ -9,8 +9,15 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
     <style>
+         /* SUITE Variable 폰트 (로컬 파일) */
+        @font-face {
+            font-family: 'SUITE Variable';
+            font-weight: 300 900;
+            /* 폰트 파일 경로가 올바른지 확인해주세요. */
+            src: url('./SUITE-Variable.woff2') format('woff2-variations');
+        }
         body {
-            font-family: 'Noto Sans KR', sans-serif;
+            font-family: 'SUITE Variable','Noto Sans KR', sans-serif;
         }
         /* 커스텀 스타일 추가 */
         .challenge-card {
