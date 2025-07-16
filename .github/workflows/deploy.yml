@@ -1,9 +1,7 @@
 name: Deploy Canvas HTML to GitHub Pages
 
-on:
-  # push 이벤트가 없으므로 이 부분을 제거합니다.
-  # workflow_dispatch:만 남겨둡니다.
-  workflow_dispatch: # <--- 이 부분이 핵심입니다.
+on:  
+  workflow_dispatch: #
 
 jobs:
   build-and-deploy:
@@ -17,4 +15,4 @@ jobs:
       uses: peaceiris/actions-gh-pages@v4
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./ # HTML 파일들이 있는 디렉토리 (저장소 루트)
+        publish_dir: ./
