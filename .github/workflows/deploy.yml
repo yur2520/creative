@@ -1,0 +1,19 @@
+name: Deploy Canvas HTML to GitHub Pages
+
+on:
+  workflow_dispatch: # <-- 오직 수동 실행만 허용
+
+jobs:
+  build-and-deploy: # 잡 이름이 'build-and-deploy'
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v4
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./ # HTML 파일들이 있는 디렉토리 (저장소 루트)
+        publish_branch: main (기본값)
