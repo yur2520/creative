@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>감정 사전</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style> 
+        /* SUITE Variable 폰트 (로컬 파일) */
+        @font-face {
+            font-family: 'SUITE Variable';
+            font-weight: 300 900;
+            /* 폰트 파일 경로 확인하기*/
+            src: url('../SUITE-Variable.woff2') format('woff2-variations');
+        }
+        
+        body {
+            font-family: 'SUITE Variable','Noto Sans KR', sans-serif;
+        }
+        /* 카드 호버 시 부드러운 전환 효과를 추가합니다 */
+        .emotion-card {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        .emotion-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <div class="container mx-auto px-4 py-12 md:py-20">
+        <!-- 페이지 제목 -->
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-2">감정 사전</h1>
+            <p class="text-lg text-gray-600">우리가 느끼는 다채로운 마음의 색깔들</p>
+        </header>
+
+        <!-- 감정 카드 그리드 -->
+        <div id="emotion-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            <!-- 감정 카드는 JavaScript로 동적으로 생성됩니다 -->
+        </div>
+    </div>
+
+    <script>
+        // 감정 데이터 배열 (밝은 색상으로 수정)
+        const emotions = [
+            { title: "감사", description: "누군가로부터 생각지도 못한 도움을 받았거나 행복한 일이 생겼을 때 느끼는 마음입니다. 우리가 받은 것에 대해 기쁨, 감동, 풍성함, 축복을 느끼는 순간입니다.", color: "bg-yellow-100" },
+            { title: "희망", description: "더 나은 미래를 기대하고 믿는 감정입니다. 어렵거나 힘든 상황 속에서도 좋은 결과를 얻을 수 있다고 느낄 때 희망을 느낍니다.", color: "bg-green-100" },
+            { title: "만족", description: "마음에 드는 일이나 결과를 얻었을 때 느끼는 감정입니다. 자신의 기대나 목표가 이루어졌을 때 이런 감정을 느낄 수 있습니다.", color: "bg-blue-100" },
+            { title: "소망", description: "무언가를 열심히 바라거나, 꼭 이루고 싶은 꿈을 가지고 있는 상태를 말합니다. 간절히 원하고, 그것이 현실이 되길 기다리는 마음입니다.", color: "bg-indigo-100" },
+            { title: "포근", description: "안전하고 행복하며 따뜻하게 느끼는 감정입니다. 마치 부드러운 담요에 몸을 감싸는 것 같은 기분입니다.", color: "bg-pink-100" },
+            { title: "너그러움", description: "다른 사람의 행동이나 어떤 사건에 대해 비난하거나 속상해할 만한 상황일지라도, 이를 받아들이고 이해하려는 마음입니다.", color: "bg-teal-100" },
+            { title: "안심", description: "위험하거나 힘든 상황에서 벗어나 걱정이 사라지고 마음이 평온해지는 것을 말합니다. 어떤 일이 잘 해결되거나 안전하다고 느껴질 때 안심하는 감정을 느낍니다.", color: "bg-lime-100" },
+            { title: "차분", description: "마음이 가라앉아 조용한 상태를 의미합니다. 정신적으로나 감정적으로 편안한 상태를 말하며, 혼란스러운 상황 속에서도 평온을 유지하게 해줍니다.", color: "bg-cyan-100" },
+            { title: "고독", description: "세상에 홀로 떨어진 듯 매우 외롭고 쓸쓸한 상태를 말합니다. 단순히 외롭다는 감정을 넘어, 깊이 생각하고 자신을 되돌아보는 시간과 가까운 의미이기도 합니다. 때로는 재충전의 시간이 되기도 하지만, 너무 길어지면 세상과의 단절로 이어질 수 있습니다.", color: "bg-slate-200" },
+            { title: "측은", description: "다른 사람이 어려움을 겪거나 고통받을 때, 그들을 위해 마음 아파하거나 걱정하는 감정입니다.", color: "bg-amber-100" },
+            { title: "행복", description: "좋아하는 사람과 함께하거나, 좋아하는 일을 할 때, 바라던 일이 이루어졌을 때 등 마음이 기쁘고 충만한 느낌을 받을 때의 감정입니다. 웃음이 나고 마음이 편안해지는 상태입니다.", color: "bg-red-200" },
+            { title: "기쁨", description: "좋은 일이 생겨 마음이 흐뭇하고 행복하게 느껴질 때 드는 감정입니다. 바라던 일이 이루어졌거나, 원하는 것을 얻었거나, 좋아하는 사람을 만났을 때 주로 느낍니다.", color: "bg-orange-200" },
+            { title: "사랑", description: "다른 사람을 마음 깊이 아끼고 존경하며, 그 상대를 위해 좋은 일을 하고 싶게 만드는 강력한 감정입니다. 가족, 친구, 반려동물뿐만 아니라 새로운 대상에 대한 관심으로도 느껴질 수 있습니다.", color: "bg-rose-200" },
+            { title: "신남", description: "좋은 일로 매우 흥분되고 기쁜 상태를 의미합니다. 원하던 것을 얻거나 기대했던 순간이 다가올 때 마음이 들뜨고 두근거리는 감정입니다.", color: "bg-yellow-200" },
+            { title: "즐거움", description: "좋은 일이 있거나 예상보다 더 좋은 결과가 발생했을 때 느끼는 감정입니다. 하고 싶었던 일을 하게 되어 기쁨을 느낄 때도 사용합니다. 즐거움은 행복, 뿌듯함, 만족감으로 이어지기도 합니다.", color: "bg-lime-200" },
+            { title: "열정", description: "어떤 일에 마음과 에너지를 다해 애정을 가지고 열중하는 마음입니다. 좋아하거나 관심 있는 일에 대해 매우 강렬하게 느끼는 감정입니다.", color: "bg-red-300" },
+            { title: "감탄", description: "무언가를 보고, 듣고, 느낄 때 그것이 매우 멋지거나 놀라워 마음속 깊이 감동이나 존경을 느끼는 감정입니다.", color: "bg-purple-200" },
+            { title: "자랑", description: "스스로 이루어 낸 일에 대해 만족스러워하는 감정입니다. 잘 된 일을 주변 사람들에게 알리고 싶은 마음이기도 합니다. 이는 자신을 긍정적으로 여기게 하지만, 과하면 잘난 척으로 비칠 수 있습니다.", color: "bg-sky-200" },
+            { title: "놀람", description: "뜻밖의 일이 생겼을 때 느끼는 감정입니다. 무서워서 가슴이 두근거릴 수도 있고, 대단함을 느껴 감동을 받을 수도 있으며, 어처구니없는 상황에서도 놀라움을 느끼기도 합니다.", color: "bg-fuchsia-200" },
+            { title: "보통", description: "특별히 좋지도, 나쁘지도 않은 평범한 느낌을 말합니다. 시험에서 최고점도, 최저점도 아닌 중간 점수를 받았을 때의 기분과 같습니다.", color: "bg-stone-200" },
+            { title: "질투", description: "자신이 가지지 못한 것을 다른 사람이 가졌을 때, 그것을 갖고 싶다고 느끼는 감정입니다. 이는 물건뿐만 아니라 다른 사람의 재능이나 능력에 대해서도 나타납니다.", color: "bg-green-300" },
+            { title: "그리움", description: "특정 사람이나 대상을 보고 싶고 기다리는 애타는 마음입니다. 과거의 시간이나 경험을 다시 느끼고 싶을 때도 그리움을 느낍니다. 허전하고 슬픈 마음이 들게 할 수 있습니다.", color: "bg-violet-200" },
+            { title: "부끄러움", description: "스스로 잘못했다고 느끼거나 다른 사람에게 실수를 보였을 때의 감정입니다. 규칙을 지키고 어긋나지 않으려는 마음에서 비롯될 수 있습니다.", color: "bg-pink-200" },
+            { title: "소심", description: "자신을 다른 사람 앞에 드러내기 어렵거나 자신감이 없을 때 느끼는 감정입니다. 실패에 대한 두려움이나 타인의 부정적인 시선에 대한 걱정에서 생깁니다.", color: "bg-gray-300" },
+            { title: "긴장", description: "어렵거나 중요한 상황에 처했을 때 느끼는 감정입니다. 최선의 결과를 위해 마음을 조이고 정신을 집중하는 상태가 유지됩니다.", color: "bg-yellow-300" },
+            { title: "뉘우침", description: "자신의 행동이나 말이 잘못되었음을 깨달았을 때 일어나는 반응입니다. 잘못된 일에 대한 양심의 가책을 느끼며, 후회보다 더 절박한 아쉬움을 담고 있습니다.", color: "bg-blue-300" },
+            { title: "난해", description: "어떤 일이나 상황을 이해하지 못하고 혼란스러워하는 상태를 말합니다. 주로 새로운 정보를 받아들일 때 이런 감정을 느낍니다.", color: "bg-indigo-300" },
+            { title: "피곤", description: "몸과 마음이 지치고 힘든 감정을 말합니다. 많은 활동 후에 나타나며, 몸과 마음에 휴식이 필요하다는 신호입니다.", color: "bg-zinc-300" },
+            { title: "걱정", description: "일의 결과가 불확실할 때 마음이 편안하지 않은 상태입니다. 부정적인 생각이 떠오르며, 좋지 않은 일이 생길까 봐 두려움과 불안을 동반하기도 합니다.", color: "bg-slate-300" },
+            { title: "따분", description: "새롭거나 흥미로운 것 없이 반복될 때 느껴지는 감정입니다. 무언가가 지루하거나 재미없을 때도 따분함을 느낄 수 있습니다.", color: "bg-neutral-300" },
+            { title: "후회", description: "이미 했던 행동이나 선택에 대해 나중에 반성하거나 기회를 놓쳤다고 느낄 때 발생하는 감정입니다. 결과가 기대와 다를 경우 이 감정을 느끼게 됩니다.", color: "bg-sky-300" },
+            { title: "슬픔", description: "자신에게 중요한 사람, 물건, 가치를 잃었을 때 느끼는 깊은 마음의 아픔을 말합니다. 간절히 원했지만 이루지 못했거나, 안타까운 상황을 보았을 때도 느낍니다.", color: "bg-blue-400" },
+            { title: "실망", description: "기대했던 일이나 사람이 그 기대에 미치지 못했을 때 느끼는 허전하고 슬픈 감정을 말합니다. 예상과 다른 결과로 마음이 상했을 때 실망감을 느낍니다.", color: "bg-gray-400" },
+            { title: "역겨움", description: "몸과 마음이 무언가를 강하게 원하지 않을 때 느끼는 감정입니다. 그 대상으로부터 피하고 싶고 도망치고 싶게 만드는 강한 거부감입니다.", color: "bg-lime-300" },
+            { title: "포기", description: "어려운 과제나 목표를 더 이상 시도하지 않기로 결정할 때 느끼는 감정입니다. 너무 어렵거나 불가능하다고 생각될 때 포기를 선택하게 됩니다.", color: "bg-stone-400" },
+            { title: "두려움", description: "위험하거나 안전하지 않은 상황을 마주할 가능성이 있을 때 느끼는 감정입니다. 낯선 장소나 처음 겪는 일을 앞두고 있을 때도 두려움을 느끼기도 합니다.", color: "bg-purple-400" },
+            { title: "외로움", description: "주변에 아무도 없어 혼자라는 생각에 쓸쓸한 기분이 드는 감정입니다. 주변 사람들과 멀게 느껴질 때도 이 감정이 들기도 합니다.", color: "bg-indigo-400" },
+            { title: "좌절", description: "계획이나 목표를 이루지 못했을 때 느끼는 감정입니다. 실패로 인해 자신감을 잃고, 화가 나거나 슬픔을 느끼는 상태를 말합니다.", color: "bg-red-400" },
+            { title: "불안", description: "미래나 특정 상황에 대해 걱정이나 두려움을 느끼는 감정입니다. 무엇이 잘못될지 모르는 불확실한 상태에서 안전하지 않다고 느끼는 마음입니다.", color: "bg-zinc-400" },
+            { title: "우울", description: "마음이 울적하고 슬프며 기운이 없는 상태를 말합니다. 활력이 떨어지고 답답하며, 평소보다 걱정과 근심이 많아지기도 합니다.", color: "bg-slate-400" },
+            { title: "당황", description: "예상하지 못한 일이 일어났을 때 느끼는 감정입니다. 어떻게 대처해야 할지 몰라 혼란스러운 상황에서 보통 느껴집니다.", color: "bg-orange-300" },
+            { title: "바람", description: "미래에 대한 기대, 희망, 그리고 간절한 소망을 의미합니다. 무언가를 강력하게 원하고 그것이 이루어지리라 기대할 때 느끼는 감정입니다.", color: "bg-cyan-200" },
+            { title: "짜증", description: "어떤 일이나 사람 때문에 불편하거나 기분이 상할 때 생기는 감정입니다. 일이 뜻대로 되지 않거나, 불쾌한 상황이 반복될 때 일어나기도 합니다.", color: "bg-amber-300" },
+            { title: "미움", description: "어떤 대상이나 사람을 싫어하고, 거부하거나 피하려는 감정을 말합니다. 그저 멀리하고 싶어 하는 마음이기도 합니다.", color: "bg-rose-400" },
+            { title: "반감", description: "어떤 사람이나 사물에 대해 본능적으로 좋지 않은 감정이나 태도를 느끼는 것입니다. 잘못된 행동이나 싫어하는 것을 볼 때 이런 반감을 느낄 수 있습니다.", color: "bg-teal-300" },
+            { title: "화", description: "자신을 불편하게 하거나 원치 않는 일이 발생했을 때 느끼는 강한 불편함과 분노를 말합니다. 제대로 다루지 않으면 더 큰 문제를 일으킬 수 있는 중요한 감정입니다.", color: "bg-red-500" }
+        ];
+
+        // 감정 데이터를 기반으로 HTML 카드를 생성하는 함수
+        function createEmotionCards() {
+            const grid = document.getElementById('emotion-grid');
+            emotions.forEach(emotion => {
+                const card = document.createElement('div');
+                // 카드 스타일링 클래스 추가
+                card.className = `emotion-card ${emotion.color} rounded-xl shadow-lg p-6 flex flex-col`;
+                
+                // 카드 내부 HTML 구조 (구분선 추가)
+                card.innerHTML = `
+                    <h2 class="text-2xl font-bold text-gray-800">${emotion.title}</h2>
+                    <hr class="border-t-2 border-white my-3">
+                    <p class="text-gray-700 leading-relaxed text-base">${emotion.description}</p>
+                `;
+                
+                // 그리드에 카드 추가
+                grid.appendChild(card);
+            });
+        }
+
+        // 페이지가 로드되면 함수를 실행
+        document.addEventListener('DOMContentLoaded', createEmotionCards);
+    </script>
+</body>
+</html>

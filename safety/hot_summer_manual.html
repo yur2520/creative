@@ -1,0 +1,166 @@
+<!DOCTYPE html> 
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+         /* SUITE Variable 폰트 (로컬 파일) */
+        @font-face {
+            font-family: 'SUITE Variable';
+            font-weight: 300 900;
+            /* 폰트 파일 경로가 올바른지 확인해주세요. */
+            src: url('../SUITE-Variable.woff2') format('woff2-variations');
+        }
+        body {
+            font-family: 'SUITE Variable','Noto Sans KR', sans-serif;
+        }
+        .hero-banner {
+            background: linear-gradient(to right, #ffecd2 0%, #fcb69f 100%);
+        }
+        .card-icon {
+            width: 60px;
+            height: 60px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <div class="container mx-auto p-4 md:p-8">
+        
+        <!-- 헤더 섹션 -->
+        <header class="hero-banner text-center p-8 rounded-2xl shadow-lg mb-10">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-2"> 슬기로운 여름 생활 </h1>
+            <p class="text-lg text-gray-700">뜨거운 여름, 폭염으로부터 우리 몸을 안전하게 지켜요!</p>
+        </header>
+
+        <!-- 폭염이란? -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-center mb-6 text-orange-600">폭염이란? </h2>
+            <div class="bg-white p-8 rounded-2xl shadow-md text-center">
+                <p class="text-lg leading-relaxed">
+                    폭염은 아주 심한 더위를 말해요. 특히 '몸으로 느끼는 온도(체감온도)'가 33도를 넘는 더운 날씨가 이틀 이상 계속될 때 <span class="font-bold text-yellow-500">'폭염주의보'</span>가 내려져요. 만약 35도가 넘는 더위가 계속되면 더 위험하다는 뜻의 <span class="font-bold text-red-500">'폭염경보'</span>가 내려진답니다.
+                </p>
+            </div>
+        </section>
+
+<section class="mb-12">
+    <h2 class="text-3xl font-bold text-center mb-8">폭염 대비 3대 건강 수칙</h2>
+    <div class="grid md:grid-cols-3 gap-8">
+        <div class="bg-white p-6 rounded-2xl shadow-lg text-center transform hover:scale-105 transition-transform">
+            <div class="flex justify-center mb-4">
+                <img src="glass-of-water.svg" alt="물컵아이콘" class="rounded">
+            </div>
+            <h3 class="text-2xl font-bold mb-2 text-sky-600">1. 물 자주 마시기</h3>
+            <p class="text-gray-600">목이 마르지 않아도, 틈틈이 물을 마셔서 우리 몸에 수분을 채워주는 게 중요해요. 시원한 물이 가장 좋아요!</p>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl shadow-lg text-center transform hover:scale-105 transition-transform">
+            <div class="flex justify-center mb-4">
+                <img src="clean-air.svg" alt="집 아이콘" class="rounded">
+            </div>
+            <h3 class="text-2xl font-bold mb-2 text-emerald-600">2. 시원하게 지내기</h3>
+            <p class="text-gray-600">밝은 색의 헐렁한 옷을 입고, 시원한 물로 샤워해요. 에어컨이 있는 시원한 곳에서 더위를 피하는 것도 좋은 방법이에요.</p>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl shadow-lg text-center transform hover:scale-105 transition-transform">
+            <div class="flex justify-center mb-4">
+                <img src="danger.svg" alt="축구공 금지 아이콘" class="rounded">
+            </div>
+            <h3 class="text-2xl font-bold mb-2 text-amber-600">3. 더운 시간대 휴식</h3>
+            <p class="text-gray-600">햇볕이 가장 뜨거운 낮 12시부터 오후 5시까지는 운동이나 바깥 활동을 피하고, 시원한 곳에서 쉬는 것이 안전해요.</p>
+        </div>
+    </div>
+</section>
+
+        <!-- 상황별 행동 요령 -->
+<section class="mb-12">
+    <h2 class="text-3xl font-bold text-center mb-8">상황별 행동 요령</h2>
+    <div class="space-y-6">
+        <div class="bg-white p-6 shadow-md" style="border-radius: 1rem; border-top-left-radius: 1.5rem; border-bottom-left-radius: 1.5rem; display: flex; align-items: center;">
+            <div style="flex-shrink: 0; width: 80px; height: 80px; background-color: #e0e0e0; border-radius: 10px; margin-right: 1.5rem; overflow: hidden;">
+                <img src="child_close_curtain.png" alt="학교 이미지" style="width: 100%; height: 100%; object-fit: cover; border-top-left-radius: 1.5rem; border-bottom-left-radius: 1.5rem;">
+            </div>
+            <div>
+                <h3 class="text-xl font-bold mb-3 text-purple-800">🏫 학교에서</h3>
+                <ul class="list-disc list-inside space-y-2 text-gray-700">
+                    <li>쉬는 시간이나 점심시간에 운동장에서 놀지 않아요.</li>
+                    <li>폭염경보가 내리면 모든 바깥 활동은 멈춰야 해요!</li>
+                    <li>손을 자주 씻고, 학교에서 주는 깨끗한 물을 마셔요.</li>
+                    <li>균형 잡힌 점심 식사를 해요.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="bg-white p-6 shadow-md" style="border-radius: 1rem; border-top-left-radius: 1.5rem; border-bottom-left-radius: 1.5rem; display: flex; align-items: center;">
+            <div style="flex-shrink: 0; width: 80px; height: 80px; background-color: #e0e0e0; border-radius: 10px; margin-right: 1.5rem; overflow: hidden;">
+                <img src="child_close_curtain.png" alt="집 이미지" style="width: 100%; height: 100%; object-fit: cover; border-top-left-radius: 1.5rem; border-bottom-left-radius: 1.5rem;">
+            </div>
+            <div>
+                <h3 class="text-xl font-bold mb-3 text-purple-800">🏡 집에서</h3>
+                <ul class="list-disc list-inside space-y-2 text-gray-700">
+                    <li>신선한 채소와 과일을 골고루 먹어요.</li>
+                    <li>에어컨을 너무 춥지 않게 틀어요 (실내외 온도 차이는 5도 정도가 적당!).</li>
+                    <li>커튼이나 블라인드로 햇빛을 막아 집을 시원하게 만들어요.</li>
+                    <li>혹시 모를 상황에 대비해 집 근처 병원 연락처를 확인해둬요.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+        <!-- 온열질환 및 응급처치 -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-center mb-8">온열질환과 응급처치 방법</h2>
+            <div class="bg-white p-8 rounded-2xl shadow-lg">
+                <p class="text-center text-lg mb-6">더위 때문에 우리 몸이 아픈 것을 '온열질환'이라고 해요. 가장 흔한 두 가지를 알아볼까요?</p>
+                
+                <!-- 온열질환 종류 -->
+                <div class="grid md:grid-cols-2 gap-8 mb-8">
+                    <div class="border-2 border-yellow-400 bg-yellow-50 p-6 rounded-xl">
+                        <h4 class="text-xl font-bold text-yellow-700"> 탈진 (어지러워요)</h4>
+                        <p class="mt-2">땀을 너무 많이 흘려서 힘이 없고 어지러운 상태예요.</p>
+                        <ul class="list-disc list-inside mt-2 text-yellow-800">
+                            <li>땀을 많이 흘림</li>
+                            <li>피부가 축축하고 창백함</li>
+                            <li>피곤하고 힘이 없음</li>
+                            <li>어지러움</li>
+                        </ul>
+                    </div>
+                    <div class="border-2 border-red-400 bg-red-50 p-6 rounded-xl">
+                        <h4 class="text-xl font-bold text-red-700">열사병 (위험해요!)</h4>
+                        <p class="mt-2">몸의 온도 조절 기능이 고장나서 아주 위험한 상태예요.</p>
+                         <ul class="list-disc list-inside mt-2 text-red-800">
+                            <li>땀이 나지 않고 피부가 뜨겁고 건조함</li>
+                            <li>몸의 온도가 40도 이상</li>
+                            <li>심한 두통</li>
+                            <li>의식을 잃을 수 있음</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 응급처치 -->
+                <div class="bg-blue-50 border-2 border-blue-400 p-6 rounded-xl">
+                    <h3 class="text-2xl font-bold text-center text-blue-700 mb-4">🚨 친구를 도와주세요! 응급처치 순서 🚨</h3>
+                    <ol class="list-decimal list-inside space-y-3 text-lg text-gray-800">
+                        <li><span class="font-bold">즉시 119에 전화하거나 주변 어른에게 알려요.</span> 특히 친구가 의식이 없다면 가장 먼저 해야 할 일이에요!</li>
+                        <li>시원한 그늘이나 에어컨이 있는 실내로 옮겨주세요.</li>
+                        <li>몸을 조이는 옷이나 단추를 풀어서 편안하게 해주세요.</li>
+                        <li>차가운 물수건으로 몸을 닦아주거나, 부채질을 해서 몸의 열을 식혀주세요.</li>
+                        <li><span class="font-bold">친구가 의식이 있다면</span> 시원한 물이나 이온 음료를 마시게 도와주세요.</li>
+                        <li><span class="font-bold text-red-600">하지만 의식이 없다면</span> 억지로 물을 마시게 하면 안 돼요!</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <!-- 마무리 -->
+        <footer class="text-center mt-12 py-6 border-t-2 border-gray-200">
+            <p class="text-gray-600">우리 모두 건강 수칙을 잘 지켜서 즐겁고 안전한 여름을 보내요!</p>
+        </footer>
+
+    </div>
+
+</body>
+</html>
