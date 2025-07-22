@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>여름방학 안내</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Google Icons Stylesheet -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f0f9ff; /* Light blue background */
+        }
+        .card {
+            background-color: white;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid #5998cf;
+        }
+        .main-title {
+            font-size: 1.5rem; /* 24px */
+            font-weight: 700;
+            color: #1e3a8a; /* Dark blue */
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s;
+            cursor: pointer;
+            margin-top: 8px;
+            margin-right: 8px;
+            text-align: center;
+        }
+        .btn-primary {
+            background-color: #59b3cf; /* Custom blue color */
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: #77c7bb; /* Custom hover color */
+        }
+        .btn-secondary {
+            background-color: #86b1bf; /* Gray-200 */
+            color: white;
+        }
+        .btn-secondary:hover {
+            background-color: #609c98; /* Gray-300 */
+        }
+        .btn-danger {
+            background-color: #ef4444; /* Red-500 */
+            color: white;
+        }
+        .btn-danger:hover {
+            background-color: #dc2626; /* Red-600 */
+        }
+        .assignment-card {
+            background-color: #f9fafb; /* Lighter gray for inner cards */
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            border-top: 4px solid #81c6db; /* Custom top border color */
+        }
+        .material-symbols-outlined {
+            vertical-align: bottom;
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-6 md:p-8">
+
+    <div class="max-w-4xl mx-auto">
+        <!-- Header -->
+        <header class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-[#1e3a8a]">🍉 여름방학 안내 🍉</h1>
+            <p class="text-lg text-gray-600 mt-2">즐겁고 알찬 여름방학을 보내요!</p>
+        </header>
+
+        <!-- Main Content -->
+        <main>
+            <!-- Vacation Schedule -->
+            <section class="card">
+                <h2 class="main-title">
+                  
+                    
+                       방학 관련 일정 안내
+                </h2>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li><strong>방학 기간:</strong> 2025. 7. 23.(수) ~ 2025. 8. 19.(화) (28일간)</li>
+                    <li><strong>국기다는 날:</strong> 2025. 8. 15.(금) (<a href="#" class="text-blue-600 hover:underline">광복절</a>)</li>
+                    <li><strong>개학하는 날:</strong> 2025. 8. 20.(수), 급식운영(○)</li>
+                    <li>
+                        <strong>도서관 개방:</strong> 7. 25.(목) ~ 8. 21.(수) 9:00~12:00 <br>
+                        <span class="ml-[7.0rem]">7. 29.(월) ~ 7. 31.(수) 미운영</span>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Assignments -->
+            <section class="card">
+                <h2 class="main-title">
+                    
+                    방학 과제물 안내
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Assignment Card 1 -->
+                    <div class="assignment-card">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">독서 빙고 & 결과물</h3>
+                        <p class="text-gray-600 mb-4 flex-grow">빙고 판을 완성한 후, 그 중 한 권을 골라 다양한 방법으로 읽고 활동 결과물을 작성해요.</p>
+                        <div class="mt-auto">
+                            
+                            <a href="#" class="btn btn-secondary w-full text-sm">다양한 방법으로 읽는 방법</a>
+                            <a href="#" class="btn btn-primary w-full text-sm">독서빙고 활동지</a>
+                        </div>
+                    </div>
+                    <!-- Assignment Card 2 -->
+                    <div class="assignment-card">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">행복한 방학 30개 챌린지</h3>
+                        <p class="text-gray-600 mb-4 flex-grow">순서, 날짜 등은 자유롭게 선택하여 도전합니다.</p>
+                        <div class="mt-auto">
+                            <a href="#" class="btn btn-secondary w-full text-sm">챌린지 안내 페이지</a>
+                            <a href="#" id="diarypageBtn" class="btn btn-primary w-full text-sm">심스페이스 마음일기 바로가기</a>
+                        </div>
+                    </div>
+                    <!-- Assignment Card 3 -->
+                    <div class="assignment-card">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">자유 사진작품 찍기</h3>
+                        <p class="text-gray-600 mb-4 flex-grow">방학 동안의 추억을 남길 수 있는 사진 작품을 자유롭게 찍고, 나의 작품을 자랑해 봅시다.</p>
+                        <div class="mt-auto">
+                            <a href="#" class="btn btn-secondary w-full text-sm">사진 찍는 요령 알기</a>
+                            <a href="#" id="uploadBtn" class="btn btn-primary w-full text-sm">사진 작품 업로드하기</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Safety Rules -->
+            <section class="card">
+                <h2 class="main-title">
+                    
+                    여름방학 안전수칙 안내
+                </h2>
+                <p class="text-gray-600 mb-4">여름방학 안전수칙을 살펴보고, 건강하고 안전한 방학을 보냅시다.</p>
+                <a href="#" class="btn btn-primary w-full">여름방학 안전수칙 살펴보기</a>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // All JavaScript related to the password modal has been removed.
+        // The buttons are now simple anchor tags (<a>) that can be linked to the appropriate pages.
+    </script>
+
+</body>
+</html>
