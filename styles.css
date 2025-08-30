@@ -1,0 +1,133 @@
+@font-face {
+            font-family: 'SUITE Variable';
+            font-weight: 300 900;           
+            src: url('./SUITE-Variable.woff2') format('woff2-variations');
+        }
+
+        :root {
+    --primary-blue: #7ebad9;
+    --primary-pink: #eca9ac;
+    --primary-green: #9dcabb;
+    --container-background-1: #cadde8;
+}
+
+        .h1-green{
+            color: var(--primary-green);
+            margin-top: 0; 
+            margin-bottom: 20px;
+            font-size: 2.2em;
+            font-weight: 700;
+        } 
+
+        .h1-blue {            
+            color: var(--primary-blue);
+            margin-top: 0; 
+            margin-bottom: 20px;
+            font-size: 2.2em;
+            font-weight: 700;
+        }
+
+        .card-df h1 {
+            color: #7ebad9;
+            margin-top: 0; 
+            margin-bottom: 20px;
+            font-size: 2.2em;
+            font-weight: 700;
+        } 
+        .card-pink {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 320px; /* 카드의 기본 너비 */
+            box-sizing: border-box;
+        }
+         .card-pink h1 {
+            color: var(--primary-pink);
+            margin-top: 0; 
+            margin-bottom: 20px;
+            font-size: 2.2em;
+            font-weight: 700;
+        } 
+        .card-green h1 {
+            color: var(--primary-green);
+            margin-top: 0; 
+            margin-bottom: 20px;
+            font-size: 2.2em;
+            font-weight: 700;
+        } 
+
+        .button-group a {
+            display: block; /* 버튼을 블록 요소로 변경하여 한 줄에 하나씩 표시 */
+            background-color: #7ebad9;
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 500;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            margin-bottom: 15px; /* 버튼 사이의 간격 */
+        }
+
+
+        .button-group-p a {
+            display: block; /* 버튼을 블록 요소로 변경하여 한 줄에 하나씩 표시 */
+            background-color: var(--primary-pink);
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 500;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            margin-bottom: 15px; /* 버튼 사이의 간격 */
+        }
+
+        .button-group-g a {
+            display: block; /* 버튼을 블록 요소로 변경하여 한 줄에 하나씩 표시 */
+            background-color: var(--primary-green);
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 500;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            margin-bottom: 15px; /* 버튼 사이의 간격 */
+        }
+
+
+        .button-group a:last-child {
+            margin-bottom: 0; /* 마지막 버튼의 하단 간격 제거 */
+        }
+
+        .button-group a:hover {
+            background-color: #24759e;
+            transform: translateY(-2px); /* 호버 시 살짝 위로 이동하는 효과 */
+        }
+
+        .button-group-p a:hover {
+            background-color: #da6b74;
+            transform: translateY(-2px); /* 호버 시 살짝 위로 이동하는 효과 */
+        }
+
+        .button-group-g a:hover {
+            background-color: #5a9981;
+            transform: translateY(-2px); /* 호버 시 살짝 위로 이동하는 효과 */
+        }
+        
+        /* 비활성화된 버튼 스타일 */
+        .button-group a.disabled {
+            background-color: #cdd2d5;
+            cursor: not-allowed;
+            pointer-events: none; /* 클릭 이벤트 비활성화 */
+        }
+        
+        .button-group a.disabled:hover {
+            transform: none;
+        }
