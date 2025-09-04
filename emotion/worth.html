@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="styles.css">
+    <title>가치 사전</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Noto Sans KR 폰트 적용 */
+        body {
+            font-family: 'SUITE Variable', 'Noto Sans KR', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <div class="container mx-auto px-4 py-8 md:py-12">
+        <header class="text-center mb-8 md:mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-800">가치 사전</h1>
+            <p class="text-lg text-gray-600 mt-2">우리가 지켜야 할 소중한 가치들</p>
+        </header>
+
+        <!-- 단어 카드가 표시될 그리드 컨테이너 -->
+        <main id="card-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
+            <!-- JavaScript를 통해 카드가 동적으로 생성됩니다. -->
+        </main>
+    </div>
+
+    <script>
+        // 단어, 의미, 한자, 영어 데이터 배열
+        const values = [
+            { term: "정직", hanja: "正直", english: "Honesty", definition: "거짓말하지 않고 진실을 말하는 것" },
+            { term: "친절", hanja: "親切", english: "Kindness", definition: "다른 사람에게 따뜻하고 상냥하게 대하는 것" },
+            { term: "배려", hanja: "配慮", english: "Consideration", definition: "다른 사람의 입장과 감정을 생각해주는 것" },
+            { term: "존중", hanja: "尊重", english: "Respect", definition: "다른 사람의 생각과 행동을 소중히 여기는 것" },
+            { term: "책임감", hanja: "責任感", english: "Responsibility", definition: "자신이 해야 할 일을 끝까지 해내는 마음" },
+            { term: "용기", hanja: "勇氣", english: "Courage", definition: "어려운 상황에서도 옳은 일을 하는 마음" },
+            { term: "협동", hanja: "協同", english: "Cooperation", definition: "다른 사람과 함께 힘을 모아 일하는 것" },
+            { term: "공정", hanja: "公正", english: "Fairness", definition: "누구에게나 똑같이 공평하게 대하는 것" },
+            { term: "감사", hanja: "感謝", english: "Gratitude", definition: "다른 사람의 도움에 고마워하는 마음" },
+            { term: "인내", hanja: "忍耐", english: "Patience", definition: "어려움을 참고 견디어내는 마음" },
+            { term: "겸손", hanja: "謙遜", english: "Humility", definition: "자신을 낮추고 다른 사람을 높이는 마음" },
+            { term: "용서", hanja: "容恕", english: "Forgiveness", definition: "다른 사람의 잘못을 너그럽게 받아주는 것" },
+            { term: "성실", hanja: "誠實", english: "Diligence", definition: "모든 일에 최선을 다하는 마음" },
+            { term: "절약", hanja: "節約", english: "Frugality", definition: "물건이나 돈을 아껴 쓰는 것" },
+            { term: "나눔", hanja: "", english: "Sharing", definition: "자신이 가진 것을 다른 사람과 함께하는 것" },
+            { term: "효도", hanja: "孝道", english: "Filial Piety", definition: "부모님을 공경하고 사랑하는 마음" },
+            { term: "예의", hanja: "禮儀", english: "Etiquette", definition: "다른 사람에게 바르고 고운 말과 행동을 하는 것" },
+            { term: "질서", hanja: "秩序", english: "Order", definition: "정해진 규칙과 약속을 잘 지키는 것" },
+            { term: "관용", hanja: "寬容", english: "Tolerance", definition: "다른 사람의 부족함을 이해하고 받아주는 마음" },
+            { term: "신뢰", hanja: "信賴", english: "Trust", definition: "다른 사람을 믿고 의지하는 마음" },
+            { term: "충실", hanja: "忠實", english: "Faithfulness", definition: "맡은 일에 최선을 다하는 마음" },
+            { term: "자립", hanja: "自立", english: "Independence", definition: "스스로 할 수 있는 일을 독립적으로 하는 것" },
+            { term: "관심", hanja: "關心", english: "Interest", definition: "다른 사람이나 주변의 일에 마음을 쓰는 것" },
+            { term: "희생", hanja: "犧牲", english: "Sacrifice", definition: "자신의 이익보다 다른 사람을 위하는 마음" },
+            { term: "청렴", hanja: "淸廉", english: "Integrity", definition: "욕심내지 않고 깨끗한 마음을 가지는 것" },
+            { term: "신중", hanja: "愼重", english: "Prudence", definition: "모든 일을 조심스럽게 생각하고 행동하는 마음" },
+            { term: "자제", hanja: "自制", english: "Self-control", definition: "자신의 감정과 행동을 스스로 조절하는 것" },
+            { term: "봉사", hanja: "奉仕", english: "Service", definition: "다른 사람을 위해 기꺼이 도움을 주는 것" },
+            { term: "환경보호", hanja: "環境保護", english: "Environmental Protection", definition: "자연과 환경을 소중히 여기고 지키려는 마음" },
+            { term: "화합", hanja: "和合", english: "Harmony", definition: "서로 다른 사람들이 하나가 되어 어울리는 것" }
+        ];
+
+        const pastelColors = [
+            'bg-red-100', 'bg-orange-100', 'bg-amber-100', 'bg-yellow-100', 
+            'bg-lime-100', 'bg-green-100', 'bg-emerald-100', 'bg-teal-100', 
+            'bg-cyan-100', 'bg-sky-100', 'bg-blue-100', 'bg-indigo-100', 
+            'bg-violet-100', 'bg-purple-100', 'bg-fuchsia-100', 'bg-pink-100', 'bg-rose-100'
+        ];
+
+        const cardContainer = document.getElementById('card-container');
+
+        // 데이터 배열을 순회하며 각 항목에 대한 카드 HTML을 생성하고 컨테이너에 추가
+        values.forEach((value, index) => {
+            const card = document.createElement('div');
+            const color = pastelColors[index % pastelColors.length];
+            card.className = `${color} rounded-lg shadow-lg p-6 flex flex-col transform hover:-translate-y-1 transition-transform duration-300`;
+            
+            // 한자가 없는 경우 표시하지 않도록 처리
+            const hanjaSpan = value.hanja ? `<span class="text-sm font-normal text-gray-500 ml-2">${value.hanja}</span>` : '';
+
+            card.innerHTML = `
+                <h2 class="text-2xl font-bold text-gray-800 mb-3 flex items-baseline flex-wrap">
+                    <span>${value.term}</span>
+                    ${hanjaSpan}
+                    <span class="text-sm font-normal text-gray-500 ml-2">${value.english}</span>
+                </h2>
+                <hr class="border-gray-400 mb-3">
+                <p class="text-gray-700 flex-grow">${value.definition}</p>
+            `;
+            
+            cardContainer.appendChild(card);
+        });
+    </script>
+</body>
+</html>
+
