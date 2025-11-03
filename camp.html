@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2025. 5학년 야영수련활동 안내</title>
+    <title>2025. 5학년 야영수련활동</title>
     <link rel="stylesheet" href="styles.css">
     <style>
         body {
@@ -318,7 +318,7 @@
             color: #555;
         }
 
-        /* [신규] '기타' 항목을 위한 리스트 스타일 */
+        /* '기타' 항목 및 [안전교육] 탭을 위한 리스트 스타일 */
         ul.other-notes {
             list-style-type: '▸ '; /* '준비물' 하위 리스트와 동일한 마커 사용 */
             padding-left: 20px;
@@ -333,314 +333,588 @@
         ul.other-notes li:last-child {
             margin-bottom: 0;
         }
-
-        /* 참가신청서 카드 (notice 스타일 적용) */
-        .info-card.submission-card {
-            background-color: #fdf6f6;
-            border: 1px solid #e0b4b2;
-            text-align: center;
-            font-weight: 600;
-            font-size: 1.1em;
-            color: #6f4a49;
+        /* [안전교육] 탭의 번호 매기기 리스트 스타일 */
+        ol.other-notes {
+            list-style-type: decimal;
+            padding-left: 30px;
+            margin: 15px 0 0 0;
         }
+        ol.other-notes li {
+            padding-left: 10px;
+            margin-bottom: 12px;
+            line-height: 1.7;
+            font-size: 1em;
+        }
+        ol.other-notes li:last-child {
+            margin-bottom: 0;
+        }
+
+
+        /* === [신규] 탭 스타일 === */
+        .tab-container {
+            width: 100%;
+        }
+        .tabs {
+            display: flex;
+            background-color: #f0f5f7; /* 탭바 배경 */
+            border-radius: 8px 8px 0 0;
+            border: 1px solid #86b0c1;
+            border-bottom: none;
+            overflow: hidden;
+        }
+        .tab-link {
+            font-family: 'SUITE Variable', 'Malgun Gothic', '맑은 고딕', 'Apple SD Gothic Neo', sans-serif;
+            font-size: 1.15em;
+            font-weight: 600;
+            padding: 14px 22px;
+            cursor: pointer;
+            border: none;
+            background-color: transparent;
+            color: #5a8a9e; /* 비활성 텍스트 */
+            transition: all 0.3s ease;
+            flex-grow: 1;
+            text-align: center;
+            border-bottom: 3px solid transparent;
+        }
+        .tab-link:hover {
+            background-color: #e8e9e2;
+        }
+        .tab-link.active {
+            color: #1b4d6b; /* 활성 텍스트 */
+            background-color: #ffffff; /* 활성 배경 */
+            border-bottom: 3px solid #1b4d6b; /* 활성 강조선 */
+        }
+        
+        .tab-content {
+            border: 1px solid #86b0c1; /* 탭바와 연결 */
+            border-top: none;
+            background-color: #ffffff; /* 카드 배경과 동일 */
+            border-radius: 0 0 8px 8px;
+            padding: 10px; /* 카드와 컨텐츠 패널 사이 여백 */
+        }
+        
+        .tab-pane {
+            display: none; /* 기본 숨김 */
+        }
+        .tab-pane.active {
+            display: block; /* 활성 시 보임 */
+        }
+        /* 탭 팬 안의 카드는 기존 스타일을 그대로 사용 */
+        .tab-pane .info-card {
+             border: none; /* 탭 패널이 테두리 역할 */
+             box-shadow: none; /* 탭 패널이 그림자 역할 */
+             margin-bottom: 0; /* 탭 패널 패딩으로 간격 조절 */
+             padding-top: 10px;
+             padding-bottom: 10px;
+        }
+        .tab-pane .info-card:last-child {
+            padding-bottom: 20px; /* 마지막 카드 하단 여백 확보 */
+        }
+        .tab-pane > .info-card {
+            /* 탭 패널 바로 밑의 카드들에만 적용 */
+            margin: 0 10px 0 10px;
+            padding-left: 15px;
+            padding-right: 15px;
+            border-bottom: 1px solid #e8e9e2; /* 카드 간 구분선 */
+            border-radius: 0;
+        }
+        .tab-pane .info-card:last-of-type {
+            border-bottom: none;
+             margin-bottom: 0;
+        }
+
+        /* [안전교육] 탭 내부 스타일 오버라이드 */
+        .tab-pane .info-card h3 {
+             font-size: 1.2em; /* 'h2'보다 한 단계 낮게 */
+             margin-top: 25px;
+             color: #1b4d6b;
+             border-bottom: 1px solid #e8e9e2;
+             padding-bottom: 8px;
+        }
+        .tab-pane .info-card h4 {
+            font-size: 1.05em;
+            margin-top: 20px;
+            font-weight: 600;
+            color: #1b4d6b;
+        }
+        .tab-pane .info-card blockquote {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f0f5f7;
+            border-left: 5px solid #86b0c1;
+            line-height: 1.7;
+            font-size: 0.95em;
+        }
+
+
+        /* === [신규] 12. 좌석 및 방 배정 버튼 === */
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .assignment-button {
+            font-family: 'SUITE Variable', 'Malgun Gothic', '맑은 고딕', 'Apple SD Gothic Neo', sans-serif;
+            flex-grow: 1;
+            padding: 15px 20px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            border: 2px solid #86b0c1;
+            background-color: #f0f5f7;
+            color: #1b4d6b;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        .assignment-button:hover {
+            background-color: #ffffff;
+            border-color: #1b4d6b;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>2025. 5학년 야영수련활동 안내</h1>
+        <h1>2025. 5학년 야영수련활동</h1>
 
-        <div class="info-card">
-            <h2>1. 일시</h2>
-            <p>2025. 11. 4.(화) 9:00 ~ 5.(수) 13:00</p>
-        </div>
-
-        <div class="info-card">
-            <h2>2. 대상</h2>
-            <p>5학년 1~5반</p>
-        </div>
-
-        <div class="info-card">
-            <h2>3. 장소</h2>
-            <p>순천시청소년수련원 <a href="https://naver.me/Fivk6DDL" target="_blank">(순천시 서면 청소년수련원길 167)(지도보기)</a></p>
-        </div>
+        <div class="tab-container">
+            <div class="tabs">
+                <button class="tab-link active" onclick="openTab(event, 'info-tab')">안내사항</button>
+                <button class="tab-link" onclick="openTab(event, 'safety-tab')">[건강 및 안전교육]</button>
+            </div>
         
-        <div class="info-card">
-            <h2>4. 준비물</h2>
-            <div class="prep-container">
-                <div class="prep-card">
-                    <h3 class="required-header">필수 준비물</h3>
-                    <ul class="checklist">
-                        <li>세면도구(수건포함)</li>
-                        <li>여벌 옷 및 속옷</li>
-                        <li>방한용 겉옷</li>
-                        <li>양말</li>
-                        <li>운동화</li>
-                        <li>텀블러</li>
-                        <li>휴지</li>
-                    </ul>
-                </div>
-                <div class="prep-card">
-                    <h3 class="optional-header">선택 준비물</h3>
-                    <ul class="checklist">
-                        <li>간식</li>
-                        <li>귀마개</li>
-                        <li>드라이기</li>
-                        <li>
-                            <details class="accordion">
-                                <summary>장갑</summary>
-                                <div class="accordion-content">
-                                    - 암벽등반 시에는 미끄럼 방지 처리된 장갑만 사용 가능
-                                </div>
-                            </details>
-                        </li>
-                        <li>
-                            <details class="accordion">
-                                <summary>슬리퍼</summary>
-                                <div class="accordion-content">
-                                    - 화장실 이용 시 사용
-                                </div>
-                            </details>
-                        </li>
-                        <li>개인 상비약</li>
-                        <li>
-                            <details class="accordion">
-                                <summary>약간의 용돈(매점 이용)</summary>
-                                <div class="accordion-content">
-                                    - 카드 및 계좌이체 어려움<br>
-                                    - 현금 소지 시 분실에 유의
-                                </div>
-                            </details>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="notice" style="margin-top: 20px; text-align: center; font-weight: 600;">
-                [금지 물품] 고데기 및 전열기구 종류 소지 불가
-            </div>
-        </div>
+            <div class="tab-content">
+                
+                <div id="info-tab" class="tab-pane active">
+                    
+                    <div class="info-card">
+                        <h2>1. 일시</h2>
+                        <p>2025. 11. 4.(화) 9:00 ~ 5.(수) 13:00</p>
+                    </div>
 
-        <div class="info-card">
-            <h2>5. 참가비</h2>
-            <p>무료 (학교 예산 지원)</p>
-        </div>
+                    <div class="info-card">
+                        <h2>2. 대상</h2>
+                        <p>5학년 1~5반</p>
+                    </div>
 
-        <div class="info-card">
-            <h2>6. 1박 2일 일정표</h2>
-            <p class="notice" style="text-align: center;">*인공암벽, 캠프파이어 실외 활동은 기상상황에 따라 실내 활동으로 대체될 수 있습니다.</p>
-            
-            <div class="schedule-container">
-                <table class="schedule-table">
-                    <thead>
-                        <tr><th colspan="2">11. 4.(화)</th></tr>
-                        <tr>
-                            <th class="time-col">시간</th>
-                            <th>내용</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>09:00-10:00</td>
-                            <td>인원점검 및 안전교육</td>
-                        </tr>
-                        <tr>
-                            <td>10:00-10:30</td>
-                            <td>학교 → 순천시청소년수련원</td>
-                        </tr>
-                        <tr>
-                            <td>10:30-11:00</td>
-                            <td>도착</td>
-                        </tr>
-                        <tr>
-                            <td>11:00-12:00</td>
-                            <td>여는 마당(생활안내 및 안전교육)</td>
-                        </tr>
-                        <tr>
-                            <td>12:00-13:30</td>
-                            <td>점심식사</td>
-                        </tr>
-                        <tr>
-                            <td>13:30-17:30</td>
-                            <td>친환경 리사이클링 체험<br>인공암벽<br>파크골프<br>(날씨에 따라 카프라 혹은 미디어 활동으로 대체될 수 있음)</td>
-                        </tr>
-                        <tr>
-                            <td>17:30-19:00</td>
-                            <td>저녁식사</td>
-                        </tr>
-                        <tr>
-                            <td>19:00-21:00</td>
-                            <td>장기자랑<br>캠프파이어<br>(캠프파이어의 경우 날씨에 따라 실내에서 진행될 수 있음)</td>
-                        </tr>
-                        <tr>
-                            <td>21:00-22:00</td>
-                            <td>세면 및 자유시간</td>
-                        </tr>
-                        <tr>
-                            <td>22:00~</td>
-                            <td>소등 및 취침</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table class="schedule-table">
-                    <thead>
-                        <tr><th colspan="2">11. 5.(수)</th></tr>
-                        <tr>
-                            <th class="time-col">시간</th>
-                            <th>내용</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>07:30-08:00</td>
-                            <td>기상, 세면 및 주변정리</td>
-                        </tr>
-                        <tr>
-                            <td>08:00-9:30</td>
-                            <td>아침식사, 짐정리 및 아침 점검</td>
-                        </tr>
-                        <tr>
-                            <td>09:30-10:30</td>
-                            <td>명량운동회 맺음 마당</td>
-                        </tr>
-                        <tr>
-                            <td>10:30-11:00</td>
-                            <td>순천시청소년수련원 → 학교</td>
-                        </tr>
-                        <tr>
-                            <td>11:00-12:20</td>
-                            <td>수련활동 평가 및 학급 활동</td>
-                        </tr>
-                        <tr>
-                            <td>12:20-13:00</td>
-                            <td>점심식사(학교 급식)</td>
-                        </tr>
-                        <tr>
-                            <td>13:00~</td>
-                            <td>종례 후 하교</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+                    <div class="info-card">
+                        <h2>3. 장소</h2>
+                        <p>순천시청소년수련원 <a href="https://naver.me/Fivk6DDL" target="_blank">(순천시 서면 청소년수련원길 167)(지도보기)</a></p>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h2>4. 준비물</h2>
+                        <div class="prep-container">
+                            <div class="prep-card">
+                                <h3 class="required-header">필수 준비물</h3>
+                                <ul class="checklist">
+                                    <li>세면도구(수건포함)</li>
+                                    <li>여벌 옷 및 속옷</li>
+                                    <li>방한용 겉옷</li>
+                                    <li>양말</li>
+                                    <li>운동화</li>
+                                    <li>텀블러</li>
+                                    <li>휴지</li>
+                                </ul>
+                            </div>
+                            <div class="prep-card">
+                                <h3 class="optional-header">선택 준비물</h3>
+                                <ul class="checklist">
+                                    <li>간식</li>
+                                    <li>귀마개</li>
+                                    <li>드라이기</li>
+                                    <li>
+                                        <details class="accordion">
+                                            <summary>장갑</summary>
+                                            <div class="accordion-content">
+                                                - 암벽등반 시에는 미끄럼 방지 처리된 장갑만 사용 가능
+                                            </div>
+                                        </details>
+                                    </li>
+                                    <li>
+                                        <details class="accordion">
+                                            <summary>슬리퍼</summary>
+                                            <div class="accordion-content">
+                                                - 화장실 이용 시 사용
+                                            </div>
+                                        </details>
+                                    </li>
+                                    <li>개인 상비약</li>
+                                    <li>
+                                        <details class="accordion">
+                                            <summary>약간의 용돈(매점 이용)</summary>
+                                            <div class="accordion-content">
+                                                - 카드 및 계좌이체 어려움<br>
+                                                - 현금 소지 시 분실에 유의
+                                            </div>
+                                        </details>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="notice" style="margin-top: 20px; text-align: center; font-weight: 600;">
+                            [금지 물품] 고데기 및 전열기구 종류 소지 불가
+                        </div>
+                    </div>
 
-        <div class="info-card">
-            <h2>7. 기본 식단표 (3식)</h2>
-            <div class="menu-container">
-                <table class="menu-table">
-                    <thead><tr><th>첫째날 점심</th></tr></thead>
-                    <tbody>
-                        <tr><td>혼합곡밥</td></tr>
-                        <tr><td>소고기콩나물국</td></tr>
-                        <tr><td>제육볶음</td></tr>
-                        <tr><td>롱치즈스틱</td></tr>
-                        <tr><td>시금치나물</td></tr>
-                        <tr><td>포기김치</td></tr>
-                    </tbody>
-                </table>
-                <table class="menu-table">
-                    <thead><tr><th>첫째날 저녁</th></tr></thead>
-                    <tbody>
-                        <tr><td>두부된장국</td></tr>
-                        <tr><td>김가루볶음밥/카레밥</td></tr>
-                        <tr><td>단호박핫도그</td></tr>
-                        <tr><td>무생채</td></tr>
-                        <tr><td>포기김치</td></tr>
-                        <tr><td>음료</td></tr>
-                    </tbody>
-                </table>
-                <table class="menu-table">
-                    <thead><tr><th>둘째날 아침</th></tr></thead>
-                    <tbody>
-                        <tr><td>기장밥</td></tr>
-                        <tr><td>맑은미역국</td></tr>
-                        <tr><td>오리채소볶음</td></tr>
-                        <tr><td>어묵메추리알장조림</td></tr>
-                        <tr><td>콩나물무침</td></tr>
-                        <tr><td>배추김치</td></tr>
-                    </tbody>
-                </table>
-            </div>
-            <p class="notice-small">*본 식단 메뉴는 기본형으로 사전협의 및 시장수급 상황에 따라 변경될 수 있음.</p>
-        </div>
+                    <div class="info-card">
+                        <h2>5. 참가비</h2>
+                        <p>무료 (학교 예산 지원)</p>
+                    </div>
 
-        <div class="info-card">
-            <h2>8. 독감 및 발열시 대책</h2>
-            <p>유증상시 보호자 인계</p>
-        </div>
+                    <div class="info-card">
+                        <h2>6. 1박 2일 일정표</h2>
+                        <p class="notice" style="text-align: center;">*인공암벽, 캠프파이어 실외 활동은 기상상황에 따라 실내 활동으로 대체될 수 있습니다.</p>
+                        
+                        <div class="schedule-container">
+                            <table class="schedule-table">
+                                <thead>
+                                    <tr><th colspan="2">11. 4.(화)</th></tr>
+                                    <tr>
+                                        <th class="time-col">시간</th>
+                                        <th>내용</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>09:00-10:00</td>
+                                        <td>인원점검 및 안전교육</td>
+                                    </tr>
+                                    <tr>
+                                        <td>10:00-10:30</td>
+                                        <td>학교 → 순천시청소년수련원</td>
+                                    </tr>
+                                    <tr>
+                                        <td>10:30-11:00</td>
+                                        <td>도착</td>
+                                    </tr>
+                                    <tr>
+                                        <td>11:00-12:00</td>
+                                        <td>여는 마당(생활안내 및 안전교육)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>12:00-13:30</td>
+                                        <td>점심식사</td>
+                                    </tr>
+                                    <tr>
+                                        <td>13:30-17:30</td>
+                                        <td>친환경 리사이클링 체험<br>인공암벽<br>파크골프<br>(날씨에 따라 카프라 혹은 미디어 활동으로 대체될 수 있음)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>17:30-19:00</td>
+                                        <td>저녁식사</td>
+                                    </tr>
+                                    <tr>
+                                        <td>19:00-21:00</td>
+                                        <td>장기자랑<br>캠프파이어<br>(캠프파이어의 경우 날씨에 따라 실내에서 진행될 수 있음)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>21:00-22:00</td>
+                                        <td>세면 및 자유시간</td>
+                                    </tr>
+                                    <tr>
+                                        <td>22:00~</td>
+                                        <td>소등 및 취침</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="schedule-table">
+                                <thead>
+                                    <tr><th colspan="2">11. 5.(수)</th></tr>
+                                    <tr>
+                                        <th class="time-col">시간</th>
+                                        <th>내용</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>07:30-08:00</td>
+                                        <td>기상, 세면 및 주변정리</td>
+                                    </tr>
+                                    <tr>
+                                        <td>08:00-9:30</td>
+                                        <td>아침식사, 짐정리 및 아침 점검</td>
+                                    </tr>
+                                    <tr>
+                                        <td>09:30-10:30</td>
+                                        <td>명량운동회 맺음 마당</td>
+                                    </tr>
+                                    <tr>
+                                        <td>10:30-11:00</td>
+                                        <td>순천시청소년수련원 → 학교</td>
+                                    </tr>
+                                    <tr>
+                                        <td>11:00-12:20</td>
+                                        <td>수련활동 평가 및 학급 활동</td>
+                                    </tr>
+                                    <tr>
+                                        <td>12:20-13:00</td>
+                                        <td>점심식사(학교 급식)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>13:00~</td>
+                                        <td>종례 후 하교</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
 
-        <div class="info-card">
-            <h2>9. 학생 휴대폰</h2>
-            <p>입소시 제출, 퇴소시 반납 예정</p>
-            <div class="contact-info">
-                - 급한 연락은 담임선생님 또는 수련원(061-755-6296)으로 해주십시오.
-            </div>
-        </div>
+                    <div class="info-card">
+                        <h2>7. 기본 식단표 (3식)</h2>
+                        <div class="menu-container">
+                            <table class="menu-table">
+                                <thead><tr><th>첫째날 점심</th></tr></thead>
+                                <tbody>
+                                    <tr><td>혼합곡밥</td></tr>
+                                    <tr><td>소고기콩나물국</td></tr>
+                                    <tr><td>제육볶음</td></tr>
+                                    <tr><td>롱치즈스틱</td></tr>
+                                    <tr><td>시금치나물</td></tr>
+                                    <tr><td>포기김치</td></tr>
+                                </tbody>
+                            </table>
+                            <table class="menu-table">
+                                <thead><tr><th>첫째날 저녁</th></tr></thead>
+                                <tbody>
+                                    <tr><td>두부된장국</td></tr>
+                                    <tr><td>김가루볶음밥/카레밥</td></tr>
+                                    <tr><td>단호박핫도그</td></tr>
+                                    <tr><td>무생채</td></tr>
+                                    <tr><td>포기김치</td></tr>
+                                    <tr><td>음료</td></tr>
+                                </tbody>
+                            </table>
+                            <table class="menu-table">
+                                <thead><tr><th>둘째날 아침</th></tr></thead>
+                                <tbody>
+                                    <tr><td>기장밥</td></tr>
+                                    <tr><td>맑은미역국</td></tr>
+                                    <tr><td>오리채소볶음</td></tr>
+                                    <tr><td>어묵메추리알장조림</td></tr>
+                                    <tr><td>콩나물무침</td></tr>
+                                    <tr><td>배추김치</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p class="notice-small">*본 식단 메뉴는 기본형으로 사전협의 및 시장수급 상황에 따라 변경될 수 있음.</p>
+                    </div>
 
-        <div class="info-card">
-            <h2>10. 식재료별 원산지 표기</h2>
-            <table class="origin-table">
-                <thead>
-                    <tr>
-                        <th>식재료</th>
-                        <th>원산지</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>쌀</td>
-                        <td>국내산</td>
-                    </tr>
-                    <tr>
-                        <td>김치류</td>
-                        <td>배추:국내산<br>고춧가루:국내산</td>
-                    </tr>
-                    <tr>
-                        <td>돼지고기</td>
-                        <td>국내산</td>
-                    </tr>
-                    <tr>
-                        <td>닭고기</td>
-                        <td>국내산</td>
-                    </tr>
-                    <tr>
-                        <td>소고기</td>
-                        <td>국거리:한우<br>불고기:호주산</td>
-                    </tr>
-                    <tr>
-                        <td>고등어</td>
-                        <td>국내산</td>
-                    </tr>
-                    <tr>
-                        <td>오징어</td>
-                        <td>국내산</td>
-                    </tr>
-                    <tr>
-                        <td>꽁치</td>
-                        <td>원양산</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        
-        <div class="info-card">
-            <h2>11. 기타</h2>
-            <ul class="other-notes">
-                <li>장기자랑 무대는 원하는 학생만 참여합니다. (수련회 당일 신청을 받습니다. 미리 신청 x)</li>
-                <li>숙소까지 경사진 언덕 및 계단이 있습니다. 바퀴 달린 가방(캐리어)을 가져오는 학생들은 손잡이를 놓치지 않도록 주의하여 주세요.</li>
-                <li>공용 화장실 및 샤워실 이용 시 문이 세게 닫히지 않도록 주의하여 이용해 주세요.</li>
-                <li>저녁식사 이후 활동 시 숙소에서 겉옷을 챙겨서 이동하여 주세요. (예정대로 야외에서 캠프파이어를 진행하게 될 경우 추워요.)</li>
-                <li>기본 이불(담요), 베개는 숙소에 인원 수만큼 준비되어 있습니다.</li>
-                <li>침대가 따로 없고, 바닥 난방이 이루어지는 숙소입니다. 취침 전 주변을 깨끗하게 정리하여 주세요.</li>
-                <li>식사 시 잔반통이 있지만, 가급적 먹을 만큼만 받아서 남기지 않도록 합시다.</li>
-                <li>건강상 유의사항이 있을 경우 미리 알려주세요.</li>
-            </ul>
-        </div>
-        
-        <div class="info-card submission-card">
-            ○ 참가신청서 제출: 2025. 10. 28.(화)까지
-            <br><span style="font-weight: 500; font-size: 0.95em;">(반드시 보호자 서명과 함께 제출하여 주세요)</span>
-        </div>
+                    <div class="info-card">
+                        <h2>8. 독감 및 발열시 대책</h2>
+                        <p>유증상시 보호자 인계</p>
+                    </div>
 
-    </div>
+                    <div class="info-card">
+                        <h2>9. 학생 휴대폰</h2>
+                        <p>입소시 제출, 퇴소시 반납 예정</p>
+                        <div class="contact-info">
+                            - 급한 연락은 담임선생님 또는 수련원(061-755-6296)으로 해주십시오.
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <h2>10. 식재료별 원산지 표기</h2>
+                        <table class="origin-table">
+                            <thead>
+                                <tr>
+                                    <th>식재료</th>
+                                    <th>원산지</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>쌀</td>
+                                    <td>국내산</td>
+                                </tr>
+                                <tr>
+                                    <td>김치류</td>
+                                    <td>배추:국내산<br>고춧가루:국내산</td>
+                                </tr>
+                                <tr>
+                                    <td>돼지고기</td>
+                                    <td>국내산</td>
+                                </tr>
+                                <tr>
+                                    <td>닭고기</td>
+                                    <td>국내산</td>
+                                </tr>
+                                <tr>
+                                    <td>소고기</td>
+                                    <td>국거리:한우<br>불고기:호주산</td>
+                                </tr>
+                                <tr>
+                                    <td>고등어</td>
+                                    <td>국내산</td>
+                                </tr>
+                                <tr>
+                                    <td>오징어</td>
+                                    <td>국내산</td>
+                                </tr>
+                                <tr>
+                                    <td>꽁치</td>
+                                    <td>원양산</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h2>11. 기타</h2>
+                        <ul class="other-notes">
+                            <li>장기자랑 무대는 원하는 학생만 참여합니다. (수련회 당일 신청을 받습니다. 미리 신청 x)</li>
+                            <li>숙소까지 경사진 언덕 및 계단이 있습니다. 바퀴 달린 가방(캐리어)을 가져오는 학생들은 손잡이를 놓치지 않도록 주의하여 주세요.</li>
+                            <li>공용 화장실 및 샤워실 이용 시 문이 세게 닫히지 않도록 주의하여 이용해 주세요.</li>
+                            <li>저녁식사 이후 활동 시 숙소에서 겉옷을 챙겨서 이동하여 주세요. (예정대로 야외에서 캠프파이어를 진행하게 될 경우 추워요.)</li>
+                            <li>기본 이불(담요), 베개는 숙소에 인원 수만큼 준비되어 있습니다.</li>
+                            <li>침대가 따로 없고, 바닥 난방이 이루어지는 숙소입니다. 취침 전 주변을 깨끗하게 정리하여 주세요.</li>
+                            <li>식사 시 잔반통이 있지만, 가급적 먹을 만큼만 받아서 남기지 않도록 합시다.</li>
+                            <li>건강상 유의사항이 있을 경우 미리 알려주세요.</li>
+                        </ul>
+                    </div>
+
+                    
+                    
+                </div> <div id="safety-tab" class="tab-pane">
+                    
+                    <div class="info-card">
+                        <h2>야영수련활동 전 건강관리 안내</h2>
+                        
+                        <h3>안전사고 및 질병 예방</h3>
+                        <ol class="other-notes">
+                            <li>현재 몸이 아픈 학생은 미리 병원 진료를 받아 야영수련활동 중 질병에 대처할 수 있도록 합니다.</li>
+                            <li>평소에 질병으로 또는 현재 감기 등으로 먹는 약이 있으면 개인 약을 꼭 챙기세요.</li>
+                            <li>신발과 옷, 소지품 등은 활동하기 편한 것으로 준비합니다.</li>
+                            <li>추운 날씨와 야외활동을 대비하여 감기에 걸리지 않도록 온도조절을 위해 입고 벗기 편한 윗옷과 외투를 준비하여 입습니다.</li>
+                            <li>지정된 장소로 다니고 이탈하여 혼자 개인행동을 하지 않습니다. <strong>(반드시 2인~, 담임의 지시(인솔)에 따름)</strong></li>
+                            <li>버스를 타면 반드시 안전벨트를 착용하며 버스 안에서 절대로 돌아다니지 않습니다.</li>
+                            <li>지정된 물, 안전한 생수만 마시며, 식사 전 반드시 비누로 손을 깨끗이 씻습니다.</li>
+                            <li>피로는 질병과 사고의 원인이 되므로 체험학습 전날에 충분한 수면과 휴식을 취합니다.</li>
+                        </ol>
+
+                        <h3>독감, 발열 시 대책</h3>
+                        <ol class="other-notes">
+                            <li>출발 전 독감이나 발열이 있는 경우 수련활동에 참여하지 않고 가정에서 휴식을 취합니다.</li>
+                            <li>활동 중 유증상 발생 시 필요시 가정 연락 후 인계</li>
+                        </ol>
+
+                        <h3>멀미 예방</h3>
+                        <p class="notice" style="margin-top: 15px;">(멀미약은 개인이 준비하며, 개인의 건강 상태에 따라 부작용이 있을 수 있으니 반드시 의사와 상담 후 사용합니다.)</p>
+                        <ol class="other-notes">
+                            <li>전날 수면을 충분히 취합니다.</li>
+                            <li>당일 아침 식사는 소화가 잘되는 음식으로 가볍게 먹습니다.</li>
+                            <li>필요 시 멀미약을 사용합니다. (멀미하는 아동은 비닐봉지 준비)</li>
+                            <li>먹는 멀미약 : 출발 30분 전에 복용</li>
+                            <li>피부에 붙이는 멀미약 : 출발 4~6시간 전에 붙임 <strong>(#반드시 의사나 약사와 상담 후 사용)</strong></li>
+                        </ol>
+
+                        <h3>평소 건강한 학생 주의사항</h3>
+                        <ol class="other-notes">
+                            <li>평소 신체가 허약한 아동은 무리하지 않도록 담임 선생님께 미리 말씀드립니다.</li>
+                            <li>평소에 치료 약을 먹는 아동은 체험활동 중 약을 먹을 시간을 꼭 챙겨서 먹습니다.</li>
+                            <li>다친 경우는 꼭 선생님께 알려 응급처치를 하고, 심하면 빨리 병원으로 후송하도록 합니다.</li>
+                        </ol>
+                        
+                        <h3>상황별 응급처치 방법</h3>
+                        
+                        <h4>1. 피부 외상 (상처)</h4>
+                        <ul class="other-notes" style="margin-top: 10px; list-style-type: disc; padding-left: 30px;">
+                            <li>상처 부위에 흙, 모래, 유리 등 이물질이 있을 때는 흐르는 물에 깨끗이 씻어 줍니다.</li>
+                            <li>단, 상처에 깊숙하게 이물질이 박혔을 때 억지로 빼지 말고 즉시 병원으로 갑니다.</li>
+                            <li>피가 나면 깨끗한 천으로 눌러 지혈합니다. 지혈 후 소독약을 바릅니다.</li>
+                        </ul>
+
+                        <h4>2. 코피가 날 때</h4>
+                        <ul class="other-notes" style="margin-top: 10px; list-style-type: disc; padding-left: 30px;">
+                            <li>머리를 약간 앞으로 숙이고 코뼈 바로 위 물렁뼈 부분을 약 10분 정도 세게 눌러 줍니다.</li>
+                        </ul>
+                        
+                        <h4>3. 눈에 이물질이 들어갔을 때</h4>
+                        <ul class="other-notes" style="margin-top: 10px; list-style-type: disc; padding-left: 30px;">
+                            <li>깨끗한 물로 충분히 씻어내고 절대로 눈을 비비지 않습니다.</li>
+                        </ul>
+
+                        <h4>4. 삐었을 때</h4>
+                        <ul class="other-notes" style="margin-top: 10px; list-style-type: disc; padding-left: 30px;">
+                            <li>얼음으로 냉찜질을 하면 통증과 부기가 완화됩니다. 환부를 탄력붕대로 감아 고정합니다.</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card">
+                        <h2>성희롱 및 성폭력 예방</h2>
+                        
+                        <h3>성폭력이란?</h3>
+                        <p style="margin-top: 10px;">상대방이 싫어하는데도(상대의 의사에 반하여) 강제로 상대방의 몸을 만지거나 자기 몸을 보여주는 또는 성적으로 놀려서 상대방에게 성적 수치감과 모욕감을 느끼게 하는 행위</p>
+                        
+                        <div class="notice" style="margin-top: 20px; text-align: left;">
+                            <strong>이런 것이 성적인 말과 행동입니다!</strong>
+                        </div>
+
+                        <h4>▸ 육체적 성적 말과 행동</h4>
+                        <ul class="other-notes" style="margin-top: 10px; list-style-type: disc; padding-left: 30px;">
+                            <li>일방적인 포옹, 뒤에서 껴안기 등의 신체적 접촉</li>
+                            <li>바지를 내리거나 화장실 이용 중 훔쳐보는 행위</li>
+                            <li>가슴, 엉덩이 등 특정 신체 부위를 만지는 행위</li>
+                        </ul>
+
+                        <h4>▸ 언어적 성적 말과 행동</h4>
+                        <ul class="other-notes" style="margin-top: 10px; list-style-type: disc; padding-left: 30px;">
+                            <li>음란한 농담이나 이야기</li>
+                            <li>성적 사실관계를 집요하게 묻거나 성적인 내용의 정보를 의도적으로 퍼뜨리는 행위</li>
+                            <li>성적 관계를 강요하는 행위</li>
+                            <li>외모 또는 신체에 대한 별명을 부르거나 놀리는 행위</li>
+                        </ul>
+
+                        <h4>▸ 시각적 성적 말과 행동</h4>
+                        <ul class="other-notes" style="margin-top: 10px; list-style-type: disc; padding-left: 30px;">
+                            <li>야한 사진, 그림, 낙서, 음란출판물 등을 게시하거나 보여주는 행위</li>
+                            <li>직접 또는 스마트폰, 컴퓨터 등을 통하여 음란한 편지, 사진, 그림을 보내는 행위</li>
+                            <li>성과 관련된 자신의 특정 신체 부위를 고의로 노출하거나 만지는 행위</li>
+                        </ul>
+
+                        <blockquote>
+                            <strong>☆ 친구 사이에 예절 바른 언어를 사용하고 서로의 의견을 존중합니다.</strong><br>
+                            본인은 친구에게 농담으로 성(性)적인 이야기를 했다 하더라도 상대방이 불쾌감과 정신적인 피해를 보았다면 성희롱에 해당하며, 성희롱 가해자가 되어 법적 문제 시 처벌의 대상이 됩니다.
+                        </blockquote>
+
+                        <h3>성폭력 예방 행동 요령</h3>
+                        <ol class="other-notes">
+                            <li>선생님 허락 없이 개인행동을 하지 않도록 하며, 반드시 친구 3~4명과 짝지어서 다닙니다.</li>
+                            <li>친구 사이에 바른 언어를 사용하고 서로의 의견을 존중합니다.</li>
+                            <li>나의 안전을 먼저 생각하며, 누군가 내 몸을 만지거나 싫은 느낌이 들면 도망을 가거나 소리를 질러 주변 어른(선생님)에게 도움을 구합니다.</li>
+                            <li>소변보는 것 훔쳐보기, 생식기 부위 발로 차기 등 상대방이 성적 수치심이나 혐오감을 느끼는 행위는 하지 않습니다.</li>
+                            <li>절대 모르는 사람을 따라가지 않습니다.</li>
+                            <li>밤에는 어디든지 밖에 나가지 않습니다.</li>
+                            <li>스마트폰 등의 사이버 성폭력에 유의합니다. (스마트폰으로 음란한 문자 및 사진 등을 보내지 않습니다.)</li>
+                            <li>친구의 몸에 함부로 낙서하거나, 옷을 벗기거나, 만지거나, 허락 없이 사진이나 동영상을 찍는 등의 행위는 성폭력에 해당하는 행위로, 타인에게 상처를 줄 뿐만 아니라 위법 행동이므로 절대 하지 않습니다. <br><strong>(★ 이런 행위가 있을 시 학교폭력에 해당하며 학교폭력법 규정에 따라 처리함)</strong></li>
+                        </ol>
+
+                    </div>
+
+                </div> </div> </div> </div> <script>
+        function openTab(evt, tabName) {
+            var i, tabpane, tablinks;
+
+            // 모든 tab-pane 숨기기 (active 클래스 제거)
+            tabpane = document.getElementsByClassName("tab-pane");
+            for (i = 0; i < tabpane.length; i++) {
+                tabpane[i].classList.remove("active");
+            }
+
+            // 모든 tab-link에서 active 클래스 제거
+            tablinks = document.getElementsByClassName("tab-link");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
+
+            // 클릭된 탭 보이기 (active 클래스 추가)
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+    </script>
 </body>
 </html>

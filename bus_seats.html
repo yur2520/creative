@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>버스 좌석 배치도</title>
+    <style>
+        /* 기본 폰트 및 배경 설정 */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Malgun Gothic", "맑은 고딕", "Apple SD Gothic Neo", "Nanum Gothic", "Noto Sans KR", sans-serif;
+            background-color: #f4f8ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* 버스 전체 레이아웃 컨테이너 */
+        .bus-container {
+            width: 380px;
+            background-color: #ffffff;
+            border: 1px solid #d0e0ff;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        /* 제목 (버스 좌석 배치표) */
+        h2 {
+            text-align: left;
+            color: #5b86e5;
+            font-size: 18px;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        /* 상단 E 좌석 행 */
+        .top-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        .top-row .seat {
+            width: 18%; /* 5개 좌석 배치 */
+        }
+
+        /* * [수정된 부분]
+         * .cabin의 불필요한 margin을 제거했습니다.
+         * justify-content: space-between; 이 두 개의 .seat-group을 양쪽으로 밀어냅니다.
+         */
+        .cabin {
+            display: flex;
+            justify-content: space-between; /* 중앙 통로 생성 */
+        }
+
+        /* * [수정된 부분]
+         * width를 48% -> 45%로 변경했습니다.
+         * 좌석 그룹 2개의 너비가 45% + 45% = 90%가 되어,
+         * 중앙 통로가 10%의 간격을 갖게 됩니다.
+         */
+        .seat-group {
+            width: 42%; /* 통로 간격(10%) 확보 */
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px; /* 좌석 간 간격 */
+        }
+
+        /* 개별 좌석 스타일 */
+        .seat {
+            border: 2px solid #aed9f5;
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 8px;
+            min-height: 55px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box; 
+            word-break: keep-all; 
+            text-align: center;
+        }
+
+        /* 좌석 번호 */
+        .seat-id {
+            font-size: 12px;
+            font-weight: bold;
+            color: #777;
+            margin-bottom: 3px;
+        }
+
+        /* 탑승자 이름 */
+        .passenger-name {
+            font-size: 14px;
+            font-weight: bold;
+            color: #111;
+        }
+
+        /* 탑승 완료 좌석 (occupied) */
+        .seat.occupied {
+            background-color: #e0f0ff;
+            border-color: #5b86e5;
+        }
+        
+        .seat.occupied .seat-id {
+            color: #3a6bc2;
+        }
+        
+        .seat.occupied .passenger-name {
+            color: #004aad;
+        }
+
+        /* 빈 좌석 (empty) */
+        .seat.empty {
+             background-color: #ffffff;
+        }
+
+        /* 상단 E좌석 (unavailable) */
+        .seat.unavailable {
+            background-color: #f0f0f0;
+            border-color: #dcdcdc;
+            color: #aaa;
+        }
+
+        /* 하단 (운전석, 출입구) */
+        .front-row {
+            display: flex;
+            justify-content: space-between; /* 가장자리 부착 */
+            margin-top: 20px;
+        }
+
+        .front-row .seat {
+            width: 30%; /* 좌석 한 개 너비 정도로 조정 */
+            font-weight: bold;
+            min-height: 50px; /* 높이 조정 */
+        }
+
+        /* 운전석 */
+        .seat.driver {
+            background-color: #e0e0e0;
+            border-color: #aaa;
+            color: #333;
+        }
+
+        /* 출입구 */
+        .seat.entrance {
+            background-color: #fff;
+            border: 2px dashed #ffb6c1;
+            color: #d1455b;
+            font-weight: bold;
+        }
+
+        /* "앞" 레이블 */
+        .front-label {
+            text-align: center;
+            margin-top: 15px;
+            font-weight: bold;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bus-container">
+        <h2>버스 좌석 배치표</h2>
+
+        <div class="top-row">
+            <div class="seat unavailable">E1</div>
+            <div class="seat unavailable">E2</div>
+            <div class="seat unavailable">E3</div>
+            <div class="seat unavailable">E4</div>
+            <div class="seat unavailable">E5</div>
+        </div>
+
+        <div class="cabin">
+            
+            <div class="seat-group">
+                <div class="seat occupied" id="D7">
+                    <span class="seat-id">D7</span>
+                    <span class="passenger-name">김시우</span>
+                </div>
+                <div class="seat empty" id="C7">
+                    <span class="seat-id">C7</span>
+                </div>
+
+                <div class="seat occupied" id="D6">
+                    <span class="seat-id">D6</span>
+                    <span class="passenger-name">백승호</span>
+                </div>
+                <div class="seat empty" id="C6">
+                    <span class="seat-id">C6</span>
+                </div>
+
+                <div class="seat occupied" id="D5">
+                    <span class="seat-id">D5</span>
+                    <span class="passenger-name">조은체</span>
+                </div>
+                <div class="seat occupied" id="C5">
+                    <span class="seat-id">C5</span>
+                    <span class="passenger-name">황보민</span>
+                </div>
+
+                <div class="seat empty" id="D4">
+                    <span class="seat-id">D4</span>
+                </div>
+                <div class="seat occupied" id="C4">
+                    <span class="seat-id">C4</span>
+                    <span class="passenger-name">박유빈</span>
+                </div>
+
+                <div class="seat occupied" id="D3">
+                    <span class="seat-id">D3</span>
+                    <span class="passenger-name">정다은</span>
+                </div>
+                <div class="seat occupied" id="C3">
+                    <span class="seat-id">C3</span>
+                    <span class="passenger-name">정지혜</span>
+                </div>
+
+                <div class="seat occupied" id="D2">
+                    <span class="seat-id">D2</span>
+                    <span class="passenger-name">정소영</span>
+                </div>
+                <div class="seat occupied" id="C2">
+                    <span class="seat-id">C2</span>
+                    <span class="passenger-name">김서하</span>
+                </div>
+
+                <div class="seat empty" id="D1">
+                    <span class="seat-id">D1</span>
+                </div>
+                <div class="seat occupied" id="C1">
+                    <span class="seat-id">C1</span>
+                    <span class="passenger-name">담임교사</span>
+                </div>
+            </div>
+
+            <div class="seat-group">
+                <div class="seat occupied" id="B7">
+                    <span class="seat-id">B7</span>
+                    <span class="passenger-name">윤선호</span>
+                </div>
+                <div class="seat occupied" id="A7">
+                    <span class="seat-id">A7</span>
+                    <span class="passenger-name">강태원</span>
+                </div>
+
+                <div class="seat occupied" id="B6">
+                    <span class="seat-id">B6</span>
+                    <span class="passenger-name">최한교</span>
+                </div>
+                <div class="seat occupied" id="A6">
+                    <span class="seat-id">A6</span>
+                    <span class="passenger-name">송민준</span>
+                </div>
+
+                <div class="seat occupied" id="B5">
+                    <span class="seat-id">B5</span>
+                    <span class="passenger-name">이효준</span>
+                </div>
+                <div class="seat occupied" id="A5">
+                    <span class="seat-id">A5</span>
+                    <span class="passenger-name">강준서</span>
+                </div>
+
+                <div class="seat occupied" id="B4">
+                    <span class="seat-id">B4</span>
+                    <span class="passenger-name">김두현</span>
+                </div>
+                <div class="seat occupied" id="A4">
+                    <span class="seat-id">A4</span>
+                    <span class="passenger-name">박대한</span>
+                </div>
+
+                <div class="seat occupied" id="B3">
+                    <span class="seat-id">B3</span>
+                    <span class="passenger-name">구소윤</span>
+                </div>
+                <div class="seat occupied" id="A3">
+                    <span class="seat-id">A3</span>
+                    <span class="passenger-name">차예주</span>
+                </div>
+
+                <div class="seat empty" id="B2">
+                    <span class="seat-id">B2</span>
+                </div>
+                <div class="seat occupied" id="A2">
+                    <span class="seat-id">A2</span>
+                    <span class="passenger-name">안주승</span>
+                </div>
+
+                <div class="seat occupied" id="B1">
+                    <span class="seat-id">B1</span>
+                    <span class="passenger-name">최서연</span>
+                </div>
+                <div class="seat empty" id="A1">
+                    <span class="seat-id">A1</span>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="front-row">
+            <div class="seat entrance">출입구</div>
+            <div class="seat driver">운전석</div>
+        </div>
+
+        <div class="front-label">앞</div>
+
+    </div>
+
+</body>
+</html>
