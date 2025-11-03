@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>배치도</title>
+    <style>
+        @font-face {
+            font-family: 'SUITE Variable';
+            font-weight: 300 900;
+            src: url('../SUITE-Variable.woff2') format('woff2-variations');
+        }
+
+        body {
+            /* 메인 테마 폰트와 색상 적용 */
+            font-family: 'SUITE Variable', 'Malgun Gothic', '맑은 고딕', 'Apple SD Gothic Neo', sans-serif;
+            background-color: #e8e9e2;
+            /* 메인 페이지 배경색 */
+            color: #1b4d6b;
+
+            display: flex;
+            justify-content: center;
+            padding: 20px 10px;
+            /* 좌우 여백 추가 */
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        /* 버스/숙소 레이아웃을 감싸는 래퍼 */
+        .main-wrapper {
+            max-width: 420px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /* 버스/숙소 공통 컨테이너 스타일 (메인 테마 카드 스타일 적용) */
+        .bus-container,
+        .room-assignment-container {
+            width: 100%;
+            background-color: #ffffff;
+            border: 1px solid #86b0c1;
+            /* 테마: 미디엄 블루 */
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            box-sizing: border-box;
+        }
+
+        /* 숙소 컨테이너 상단 여백 */
+        .room-assignment-container {
+            margin-top: 20px;
+        }
+
+        /* 제목 (메인 테마 H2 스타일 적용) */
+        h2 {
+            text-align: left;
+            color: #1b4d6b;
+            /* 테마: 다크 블루 */
+            font-size: 1.3em;
+            margin-top: 0;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e8e9e2;
+            /* 테마: 라이트 베이지 */
+        }
+
+        /* === [기존 레이아웃 유지] 상단 E 좌석 행 === */
+        .top-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            gap: 8px;
+            /* 좌석 간 간격 추가 */
+        }
+
+        .top-row .seat {
+            width: 18%;
+            /* 5개 좌석 배치 (기존 유지) */
+        }
+
+        /* === [기존 레이아웃 유지] 메인 좌석 (통로 포함) === */
+        .cabin {
+            display: flex;
+            justify-content: space-between;
+            /* 중앙 통로 생성 (기존 유지) */
+        }
+
+        /* === [기존 레이아웃 유지] 좌석 그룹 (A/B, C/D) === */
+        .seat-group {
+            width: 42%;
+            /* 통로 간격 확보 (비율 살짝 조정) */
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            /* 좌석 간 간격 (기존 유지) */
+        }
+
+        /* === [테마 적용] 개별 좌석 스타일 === */
+        .seat {
+            border-radius: 6px;
+            padding: 8px;
+            min-height: 55px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+            word-break: keep-all;
+            text-align: center;
+            font-size: 0.9em;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        /* 좌석 번호 */
+        .seat-id {
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 3px;
+        }
+
+        /* 탑승자 이름 */
+        .passenger-name {
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        /* [테마 적용] 탑승 완료 좌석 (occupied) */
+        .seat.occupied {
+            background-color: #1b4d6b;
+            /* 테마: 다크 블루 */
+            border: 1px solid #1b4d6b;
+            color: #ffffff;
+        }
+
+        .seat.occupied .seat-id {
+            color: #ffffff;
+            opacity: 0.8;
+        }
+
+        .seat.occupied .passenger-name {
+            color: #ffffff;
+        }
+
+        /* [테마 적용] 빈 좌석 (empty) */
+        .seat.empty {
+            background-color: #ffffff;
+            border: 2px solid #a9c8d4;
+            /* 테마: 라이트 미디엄 블루 */
+            color: #a9c8d4;
+        }
+
+        .seat.empty .seat-id {
+            color: #a9c8d4;
+            opacity: 1;
+        }
+
+        /* [테마 적용] 상단 E좌석 (unavailable) */
+        .seat.unavailable {
+            background-color: #f0f5f7;
+            /* 테마: 라이트 미디엄 블루 */
+            border: 1px solid #a9c8d4;
+            color: #1b4d6b;
+            opacity: 0.7;
+        }
+
+        /* [테마 적용] 하단 (운전석, 출입구) */
+        .front-row {
+            display: flex;
+            justify-content: space-between;
+            /* 가장자리 부착 (기존 유지) */
+            margin-top: 20px;
+        }
+
+        .front-row .seat {
+            width: 42%;
+            /* 좌석 그룹과 너비 맞춤 */
+            font-weight: 600;
+            min-height: 50px;
+            /* 높이 조정 (기존 유지) */
+        }
+
+        /* [테마 적용] 운전석 */
+        .seat.driver {
+            background-color: #f0f5f7;
+            border: 1px solid #a9c8d4;
+            color: #1b4d6b;
+        }
+
+        /* [테마 적용] 출입구 */
+        .seat.entrance {
+            background-color: #fdf6f6;
+            /* 테마: 라이트 핑크 */
+            border: 2px dashed #e0b4b2;
+            /* 테마: 소프트 핑크 */
+            color: #6f4a49;
+            /* 테마: 다크 핑크 */
+        }
+
+        /* [테마 적용] "앞" 레이블 */
+        .front-label {
+            text-align: center;
+            margin-top: 15px;
+            font-weight: bold;
+            color: #1b4d6b;
+        }
+
+
+        /* === [신규] 숙소 배정 카드 스타일 === */
+        .room-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            /* 모바일: 1열 */
+            gap: 15px;
+        }
+
+        /* 준비물 카드와 유사한 스타일 */
+        .room-card {
+            border: 1px solid #a9c8d4;
+            /* 테마: 라이트 미디엄 블루 */
+            border-radius: 8px;
+            background: #ffffff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            /* h3 배경색이 둥근 모서리를 넘지 않도록 */
+        }
+
+        .room-card h3 {
+            font-family: 'SUITE Variable', 'Malgun Gothic', '맑은 고딕', 'Apple SD Gothic Neo', sans-serif;
+            font-size: 1.1em;
+            margin: 0;
+            padding: 12px 15px;
+            border-bottom: 1px solid #a9c8d4;
+            color: #1b4d6b;
+            /* 테마: 다크 블루 */
+            background-color: #f0f5f7;
+            /* 테마: 라이트 미디엄 블루 */
+        }
+
+        .room-card ul {
+            list-style-type: none;
+            padding: 15px 20px;
+            margin: 0;
+        }
+
+        .room-card li {
+            margin-bottom: 10px;
+            font-size: 1.05em;
+            color: #1b4d6b;
+            font-weight: 500;
+        }
+
+        .room-card li:last-child {
+            margin-bottom: 0;
+        }
+
+        /* 2열 레이아웃 (화면이 조금만 넓어져도 적용) */
+        @media (min-width: 400px) {
+            .room-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="main-wrapper">
+        <div class="bus-container">
+            <h2>버스 좌석 배치표</h2>
+
+            <div class="top-row">
+                <div class="seat unavailable">E1</div>
+                <div class="seat unavailable">E2</div>
+                <div class="seat unavailable">E3</div>
+                <div class="seat unavailable">E4</div>
+                <div class="seat unavailable">E5</div>
+            </div>
+
+            <div class="cabin">
+
+                <div class="seat-group">
+                    <div class="seat occupied" id="D7">
+                        <span class="seat-id">D7</span>
+                        <span class="passenger-name">김시우</span>
+                    </div>
+                    <div class="seat empty" id="C7">
+                        <span class="seat-id">C7</span>
+                    </div>
+
+                    <div class="seat occupied" id="D6">
+                        <span class="seat-id">D6</span>
+                        <span class="passenger-name">백승호</span>
+                    </div>
+                    <div class="seat empty" id="C6">
+                        <span class="seat-id">C6</span>
+                    </div>
+
+                    <div class="seat occupied" id="D5">
+                        <span class="seat-id">D5</span>
+                        <span class="passenger-name">조은체</span>
+                    </div>
+                    <div class="seat occupied" id="C5">
+                        <span class="seat-id">C5</span>
+                        <span class="passenger-name">황보민</span>
+                    </div>
+
+                    <div class="seat empty" id="D4">
+                        <span class="seat-id">D4</span>
+                    </div>
+                    <div class="seat occupied" id="C4">
+                        <span class="seat-id">C4</span>
+                        <span class="passenger-name">박유빈</span>
+                    </div>
+
+                    <div class="seat occupied" id="D3">
+                        <span class="seat-id">D3</span>
+                        <span class="passenger-name">정다은</span>
+                    </div>
+                    <div class="seat occupied" id="C3">
+                        <span class="seat-id">C3</span>
+                        <span class="passenger-name">정지혜</span>
+                    </div>
+
+                    <div class="seat occupied" id="D2">
+                        <span class="seat-id">D2</span>
+                        <span class="passenger-name">정소영</span>
+                    </div>
+                    <div class="seat occupied" id="C2">
+                        <span class="seat-id">C2</span>
+                        <span class="passenger-name">김서하</span>
+                    </div>
+
+                    <div class="seat empty" id="D1">
+                        <span class="seat-id">D1</span>
+                    </div>
+                    <div class="seat occupied" id="C1">
+                        <span class="seat-id">C1</span>
+                        <span class="passenger-name">담임교사</span>
+                    </div>
+                </div>
+
+                <div class="seat-group">
+                    <div class="seat occupied" id="B7">
+                        <span class="seat-id">B7</span>
+                        <span class="passenger-name">윤선호</span>
+                    </div>
+                    <div class="seat occupied" id="A7">
+                        <span class="seat-id">A7</span>
+                        <span class="passenger-name">강태원</span>
+                    </div>
+
+                    <div class="seat occupied" id="B6">
+                        <span class="seat-id">B6</span>
+                        <span class="passenger-name">최한교</span>
+                    </div>
+                    <div class="seat occupied" id="A6">
+                        <span class="seat-id">A6</span>
+                        <span class="passenger-name">송민준</span>
+                    </div>
+
+                    <div class="seat occupied" id="B5">
+                        <span class="seat-id">B5</span>
+                        <span class="passenger-name">이효준</span>
+                    </div>
+                    <div class="seat occupied" id="A5">
+                        <span class="seat-id">A5</span>
+                        <span class="passenger-name">강준서</span>
+                    </div>
+
+                    <div class="seat occupied" id="B4">
+                        <span class="seat-id">B4</span>
+                        <span class="passenger-name">김두현</span>
+                    </div>
+                    <div class="seat occupied" id="A4">
+                        <span class="seat-id">A4</span>
+                        <span class="passenger-name">박대한</span>
+                    </div>
+
+                    <div class="seat occupied" id="B3">
+                        <span class="seat-id">B3</span>
+                        <span class="passenger-name">구소윤</span>
+                    </div>
+                    <div class="seat occupied" id="A3">
+                        <span class="seat-id">A3</span>
+                        <span class="passenger-name">차예주</span>
+                    </div>
+
+                    <div class="seat empty" id="B2">
+                        <span class="seat-id">B2</span>
+                    </div>
+                    <div class="seat occupied" id="A2">
+                        <span class="seat-id">A2</span>
+                        <span class="passenger-name">안주승</span>
+                    </div>
+
+                    <div class="seat occupied" id="B1">
+                        <span class="seat-id">B1</span>
+                        <span class="passenger-name">최서연</span>
+                    </div>
+                    <div class="seat empty" id="A1">
+                        <span class="seat-id">A1</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="front-row">
+                <div class="seat entrance">출입구</div>
+                <div class="seat driver">운전석</div>
+            </div>
+
+            <div class="front-label">앞</div>
+        </div>
+
+        <div class="room-assignment-container">
+            <h2>숙소 배정</h2>
+            <div class="room-grid">
+
+                <div class="room-card">
+                    <h3>남학생 A조</h3>
+                    <ul>
+                        <li>강준서</li>
+                        <li>김두현</li>
+                        <li>박대한</li>
+                        <li>윤선호</li>
+                        <li>최한교</li>
+                    </ul>
+                </div>
+
+                <div class="room-card">
+                    <h3>남학생 B조</h3>
+                    <ul>
+                        <li>강태원</li>
+                        <li>김시우</li>
+                        <li>백승호</li>
+                        <li>송민준</li>
+                        <li>안주승</li>
+                        <li>이효준</li>
+                    </ul>
+                </div>
+
+                <div class="room-card">
+                    <h3>여학생 A조</h3>
+                    <ul>
+                        <li>김서하</li>
+                        <li>박유빈</li>
+                        <li>정소영</li>
+                        <li>조은체</li>
+                        <li>최서연</li>
+                        <li>황보민</li>
+                    </ul>
+                </div>
+
+                <div class="room-card">
+                    <h3>여학생 B조</h3>
+                    <ul>
+                        <li>구소윤</li>
+                        <li>이슬</li>
+                        <li>정다은</li>
+                        <li>정지혜</li>
+                        <li>차예주</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>
